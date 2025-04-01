@@ -2,9 +2,17 @@ import { useContext, useEffect } from "react";
 import "./App.css";
 import { AuthContext } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import AdminDashboard from "./admin/AdminDashboard";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Booking from "./pages/Booking";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -18,6 +26,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/booking" element={<Booking/>}/>
+
         <Route
           path="/admin"
           element={

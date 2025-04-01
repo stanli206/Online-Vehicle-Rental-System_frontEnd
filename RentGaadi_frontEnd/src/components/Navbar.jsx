@@ -10,11 +10,11 @@ function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate("/Home");
+    navigate("/");
   };
   return (
     <nav>
-      {isAdmin && <Link to="/admin">Amin</Link>}
+      {isAdmin && <Link to="/admin">Admin</Link>}
       {user && !isAdmin && <Link> My Booking</Link>}
       {user ? (
         <button onClick={handleLogout}>LogOut</button>

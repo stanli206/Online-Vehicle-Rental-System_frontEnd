@@ -11,14 +11,16 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       localStorage.setItem("user", JSON.stringify(user));
+    // console.log("User logged in:", user);
+
     } else {
       localStorage.removeItem("user"); // Remove user on logout
     }
   }, [user]);
 
   const login = (userData) => {
-    console.log("User logged in:", userData); 
     setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData)); // Save user to local storage
   };
 
   const logout = () => {
