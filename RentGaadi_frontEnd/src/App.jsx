@@ -13,6 +13,7 @@ import AdminDashboard from "./admin/AdminDashboard";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Booking from "./pages/Booking";
+import Payment from "./pages/Payment";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -27,8 +28,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/booking" element={<Booking/>}/>
+        <Route path="/login" element={<Login />} />
+        <Route path="/booking" element={<Booking />} />
+        <Route path="/payment" element={<Payment />} />
 
         <Route
           path="/admin"
