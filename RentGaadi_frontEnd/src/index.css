@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+/* Add this in your global CSS file or component styles
+.react-datepicker__day--highlighted-booked {
+  background-color: red !important;
+  color: red !important;
+  border-radius: 50%;
+} */
+.booked-dates {
+    background-color: red !important;
+    color: white !important;
+    border-radius: 50%;
+  }
