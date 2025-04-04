@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const editFormRef = useRef(null);
   const [newVehicle, setNewVehicle] = useState({
     make: "",
     model: "",
@@ -24,11 +25,11 @@ const AdminDashboard = () => {
   const [editId, setEditId] = useState(null);
 
   useEffect(() => {
-    if (!user || user.role !== "Admin") {
-      alert("Access denied! Redirecting...");
-      navigate("/");
-      return;
-    }
+    // if (!user || user.role !== "Admin") {
+    //   alert("Access denied! Redirecting...");
+    //   navigate("/");
+    //   return;
+    // }
 
     axios
       .get("http://localhost:5000/api/vehicle/getAllVehicles", {
@@ -47,17 +48,17 @@ const AdminDashboard = () => {
   const handleAddVehicle = () => {
     const formData = new FormData();
 
-    console.log("make" + newVehicle.make);
-    console.log("model" + newVehicle.model);
-    console.log("year" + newVehicle.year);
-    console.log("priceperday" + newVehicle.pricePerDay);
-    console.log("location" + newVehicle.location);
-    console.log("availability" + newVehicle.availability);
-    console.log("description" + newVehicle.description);
-    console.log("seats" + newVehicle.seats);
-    console.log("fueltype" + newVehicle.fuelType);
-    console.log("tramsmission" + newVehicle.transmission);
-    console.log("images" + newVehicle.images);
+    // console.log("make" + newVehicle.make);
+    // console.log("model" + newVehicle.model);
+    // console.log("year" + newVehicle.year);
+    // console.log("priceperday" + newVehicle.pricePerDay);
+    // console.log("location" + newVehicle.location);
+    // console.log("availability" + newVehicle.availability);
+    // console.log("description" + newVehicle.description);
+    // console.log("seats" + newVehicle.seats);
+    // console.log("fueltype" + newVehicle.fuelType);
+    // console.log("tramsmission" + newVehicle.transmission);
+    // console.log("images" + newVehicle.images);
 
     formData.append("make", newVehicle.make);
     formData.append("model", newVehicle.model);
@@ -115,6 +116,12 @@ const AdminDashboard = () => {
       transmission: vehicle.transmission,
       availability: vehicle.availability, // Populate availability for edit
     });
+    setTimeout(() => {
+      editFormRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
   };
 
   const handleUpdateVehicle = () => {
@@ -192,7 +199,10 @@ const AdminDashboard = () => {
       ) : (
         <div className="max-w-6xl mx-auto">
           {/* Add Vehicle Form */}
-          <div className="bg-white shadow-md rounded p-5 mb-10">
+          <div
+            ref={editFormRef}
+            className="bg-white shadow-md rounded p-5 mb-10"
+          >
             <h2 className="text-xl font-semibold mb-4 text-gray-700">
               {editId ? "✏️ Edit Vehicle" : "➕ Add New Vehicle"}
             </h2>

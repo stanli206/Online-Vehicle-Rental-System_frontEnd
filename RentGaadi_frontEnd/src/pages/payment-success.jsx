@@ -21,7 +21,7 @@ const PaymentSuccess = () => {
         bookingId,
         userId,
       });
-      console.log("Payment and Booking updated successfully!");
+      // console.log("Payment and Booking updated successfully!");
     } catch (error) {
       console.error("Error updating payment:", error);
     }

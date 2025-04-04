@@ -31,7 +31,7 @@ const Payment = () => {
         "http://localhost:5000/api/payment/createPayment", // Updated endpoint
         {
           bookingId: booking.id,
-          paymentMethod: "card", // Default to card since we're using Stripe
+          paymentMethod: "card", 
         },
         {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -73,9 +73,14 @@ const Payment = () => {
 
         <div className="mb-6 bg-gray-100 p-4 rounded-md">
           <h3 className="font-semibold mb-2">Your Booking:</h3>
+          <p>ID : {booking.id}</p>
           <p>
-            {vehicle.make} {vehicle.model}
+            Vehicle : {vehicle.make} {vehicle.model}
           </p>
+          <p>Start : {booking.start}</p>
+          <p>End : {booking.end}</p>
+          <p>total Days : {booking.totalDays}</p>
+
           <p>Total: ₹{booking.totalPrice}</p>
         </div>
 
@@ -86,7 +91,7 @@ const Payment = () => {
             isProcessing ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"
           }`}
         >
-          {isProcessing ? "Processing..." : "Pay with Card"}
+          {isProcessing ? "Processing..." : "Pay now"}
         </button>
 
         {error && (
