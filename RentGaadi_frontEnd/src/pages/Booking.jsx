@@ -12,9 +12,8 @@ const Booking = () => {
   const navigate = useNavigate();
   const vehicle = location.state?.vehicle;
 
-  /////////////////////////////////////////////////////////
 
-  // Add these new state variables at the top of your component with other useState declarations
+  
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({
     rating: 0,
@@ -22,32 +21,23 @@ const Booking = () => {
   });
   const [showReviewForm, setShowReviewForm] = useState(false);
 
-  // Add this useEffect for fetching reviews along with your other useEffect
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
           `http://localhost:5000/api/review/getAllReviewById/${vehicle._id}`
-          // {
-          //   headers: {
-          //     Authorization: `Bearer ${user.token}`,
-          //   },
-          // }
+          
         );
         window.scrollTo(0, 0);
         setReviews(response.data);
       } catch (error) {
         console.error("Failed to fetch reviews:", error);
-        // Optional: Show error to user
         alert("Failed to load reviews. Please try again later.");
       }
     };
 
-    //if (user?.token) {
     fetchReviews();
-    // } else {
-    //  console.log("User not authenticated - can't fetch reviews");
-    //}
+   
   }, [vehicle._id, user?.token]);
 
   // Add these new functions for handling reviews
@@ -84,7 +74,6 @@ const Booking = () => {
     return (sum / reviews.length).toFixed(1);
   };
 
-  //////////////////////////////////////////////////////////
 
   const [formData, setFormData] = useState({
     startDate: null,
@@ -200,7 +189,7 @@ const Booking = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 bg-gray-50 min-h-screen">
+    <div className="container mx-auto p-6 bg-gray-50 min-h-screen pt-28">
       <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
         Book Your Ride
       </h2>

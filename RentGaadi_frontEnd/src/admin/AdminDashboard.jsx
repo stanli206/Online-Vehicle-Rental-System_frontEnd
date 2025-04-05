@@ -19,18 +19,12 @@ const AdminDashboard = () => {
     seats: "",
     fuelType: "",
     transmission: "",
-    availability: true, // Default availability is true
+    availability: true,
     images: null,
   });
   const [editId, setEditId] = useState(null);
 
   useEffect(() => {
-    // if (!user || user.role !== "Admin") {
-    //   alert("Access denied! Redirecting...");
-    //   navigate("/");
-    //   return;
-    // }
-
     axios
       .get("http://localhost:5000/api/vehicle/getAllVehicles", {
         headers: { Authorization: `Bearer ${user.token}` },
@@ -47,19 +41,6 @@ const AdminDashboard = () => {
 
   const handleAddVehicle = () => {
     const formData = new FormData();
-
-    // console.log("make" + newVehicle.make);
-    // console.log("model" + newVehicle.model);
-    // console.log("year" + newVehicle.year);
-    // console.log("priceperday" + newVehicle.pricePerDay);
-    // console.log("location" + newVehicle.location);
-    // console.log("availability" + newVehicle.availability);
-    // console.log("description" + newVehicle.description);
-    // console.log("seats" + newVehicle.seats);
-    // console.log("fueltype" + newVehicle.fuelType);
-    // console.log("tramsmission" + newVehicle.transmission);
-    // console.log("images" + newVehicle.images);
-
     formData.append("make", newVehicle.make);
     formData.append("model", newVehicle.model);
     formData.append("year", newVehicle.year);
@@ -69,10 +50,10 @@ const AdminDashboard = () => {
     formData.append("seats", newVehicle.seats);
     formData.append("fuelType", newVehicle.fuelType);
     formData.append("transmission", newVehicle.transmission);
-    formData.append("availability", newVehicle.availability); // Add availability to formData
+    formData.append("availability", newVehicle.availability);
     if (newVehicle.images) {
       formData.append("images", newVehicle.images);
-      console.log("images" + newVehicle.images); // Add image if available
+      console.log("images" + newVehicle.images);
     }
 
     axios
@@ -94,7 +75,7 @@ const AdminDashboard = () => {
           seats: "",
           fuelType: "",
           transmission: "",
-          availability: true, // Reset availability to true
+          availability: true,
           image: null,
         });
         alert("Vehicle Added Successfully!");
@@ -189,7 +170,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 p-6 pt-25">
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
         🚗 Admin Dashboard
       </h1>
@@ -373,9 +354,17 @@ const AdminDashboard = () => {
                 key={vehicle._id}
                 className="bg-white p-4 shadow rounded border"
               >
+                <img
+                  src={vehicle.images || "/default-image.jpg"}
+                  alt={vehicle.model}
+                  className="w-full h-78 object-none rounded-md mb-4"
+                />
                 <h3 className="text-lg font-semibold">
                   {vehicle.make} {vehicle.model}
                 </h3>
+                <p className="text-yellow-600 font-bold">
+                  Vehicle ID : {vehicle._id}
+                </p>
                 <p className="text-blue-600 font-bold">
                   ${vehicle.pricePerDay}/day
                 </p>

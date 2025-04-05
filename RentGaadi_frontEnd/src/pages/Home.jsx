@@ -19,7 +19,7 @@ const Home = () => {
         );
         setVehicles(response.data.data);
 
-        // 🔥 Fetch ratings for each vehicle
+        //Fetch ratings for each vehicle
         response.data.data.forEach((vehicle) => {
           fetchRating(vehicle._id);
         });
@@ -34,7 +34,7 @@ const Home = () => {
     fetchVehicles();
   }, []);
 
-  // 📌 Fetch Rating for a Vehicle
+  // Fetch Rating for a Vehicle
   const fetchRating = async (vehicleId) => {
     try {
       const response = await axios.get(
@@ -65,8 +65,6 @@ const Home = () => {
     vehiclesSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-
-
   return (
     <div className="bg-gray-100">
       {/* Hero Section */}
@@ -89,7 +87,10 @@ const Home = () => {
       </section>
 
       {/* Search Section */}
-      <section className="py-8 px-4 bg-white shadow-md">
+      <section
+        ref={vehiclesSectionRef}
+        className="py-8 px-4 bg-white shadow-md"
+      >
         <div className="container mx-auto flex flex-wrap items-center justify-between">
           <input
             type="text"
@@ -108,7 +109,7 @@ const Home = () => {
       </section>
 
       {/* Vehicle Listings */}
-      <section ref={vehiclesSectionRef} className="container mx-auto p-6">
+      <section className="container mx-auto p-6">
         <h2 className="text-4xl font-bold text-center mb-8">
           Featured Vehicles
         </h2>
