@@ -122,9 +122,9 @@ const AdminDashboard = () => {
       formData.append("images", newVehicle.images);
       // Add image if available
     }
-
+//http://localhost:5000
     axios
-      .put(`http://localhost:5000/api/vehicle/update/${editId}`, formData, {
+      .put(`https://rentgaadi-backend.onrender.com/api/vehicle/update/${editId}`, formData, {
         headers: {
           Authorization: `Bearer ${user.token}`,
           "Content-Type": "multipart/form-data",

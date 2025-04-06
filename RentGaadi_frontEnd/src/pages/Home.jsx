@@ -15,7 +15,7 @@ const Home = () => {
     const fetchVehicles = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/vehicle/getAllVehicles"
+          "https://rentgaadi-backend.onrender.com/api/vehicle/getAllVehicles"
         );
         setVehicles(response.data.data);
 
@@ -38,7 +38,7 @@ const Home = () => {
   const fetchRating = async (vehicleId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/review/${vehicleId}/average-rating`
+        `https://rentgaadi-backend.onrender.com/api/review/${vehicleId}/average-rating`
       );
       setRatings((prevRatings) => ({
         ...prevRatings,

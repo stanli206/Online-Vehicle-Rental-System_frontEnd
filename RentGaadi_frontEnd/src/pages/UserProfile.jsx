@@ -20,7 +20,7 @@ const UserProfile = () => {
   const fetchProfile = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/user/userProfile/${user._id}`,
+        `https://rentgaadi-backend.onrender.com/api/user/userProfile/${user._id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -43,7 +43,7 @@ const UserProfile = () => {
     setLoading(true);
     try {
       await axios.put(
-        `http://localhost:5000/api/user/updateProfile/${user._id}`,
+        `https://rentgaadi-backend.onrender.com/api/user/updateProfile/${user._id}`,
         updatedProfile,
         {
           headers: {
@@ -68,7 +68,9 @@ const UserProfile = () => {
   }, [user]);
 
   if (!profile)
-    return <div className="text-center mt-10 text-lg font-semibold">Loading...</div>;
+    return (
+      <div className="text-center mt-10 text-lg font-semibold">Loading...</div>
+    );
 
   return (
     <div className="max-w-2xl mx-auto mt-10 bg-white shadow-lg rounded-xl p-8">
@@ -82,7 +84,9 @@ const UserProfile = () => {
         </button>
       </div>
 
-      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">My <span className="text-yellow-700">Profile</span></h2>
+      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+        My <span className="text-yellow-700">Profile</span>
+      </h2>
 
       <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
         <div className="flex flex-col items-center mb-6">
@@ -147,9 +151,18 @@ const UserProfile = () => {
           </div>
         ) : (
           <div className="text-center space-y-2">
-            <p className="text-lg font-semibold"><label>Name: </label>{profile.name}</p>
-            <p className="text-gray-600"><label>email : </label>{profile.email}</p>
-            <p className="text-gray-600"><label>phone : </label>{profile.phone}</p>
+            <p className="text-lg font-semibold">
+              <label>Name: </label>
+              {profile.name}
+            </p>
+            <p className="text-gray-600">
+              <label>email : </label>
+              {profile.email}
+            </p>
+            <p className="text-gray-600">
+              <label>phone : </label>
+              {profile.phone}
+            </p>
             <button
               className="mt-6 border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium"
               onClick={() => setEditMode(true)}
