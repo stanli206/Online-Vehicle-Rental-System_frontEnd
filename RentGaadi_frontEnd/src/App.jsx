@@ -17,6 +17,7 @@ import Payment from "./pages/Payment";
 import PaymentSuccess from "./pages/payment-success";
 import PaymentFailed from "./pages/PaymentFailed";
 import MyBooking from "./pages/MyBooking";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -37,6 +38,7 @@ function App() {
         <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route path="/payment-failed" element={<PaymentFailed />} />
         <Route path="/orders&bookings" element={<MyBooking />} />
+        <Route path="/userProfile" element={<UserProfile />} />
 
         <Route
           path="/admin"

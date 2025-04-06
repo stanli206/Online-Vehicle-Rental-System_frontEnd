@@ -60,6 +60,8 @@ const MyBooking = () => {
       bookings.find((b) => b._id === bookingId)?.status === "pending"
         ? "remove"
         : "cancel";
+    console.log(action);
+
     const message =
       action === "remove"
         ? "Are you sure you want to remove this pending booking?"

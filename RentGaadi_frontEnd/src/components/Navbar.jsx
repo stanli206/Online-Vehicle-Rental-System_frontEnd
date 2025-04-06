@@ -30,12 +30,19 @@ function Navbar() {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-yellow-600 to-yellow-600 text-white bg-gray shadow-md">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-yellow-700 to-yellow-700 text-white bg-gray shadow-md rounded">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo & Left Links */}
         <div className="flex items-center gap-6">
-          <Link to="/" className="text-2xl font-bold tracking-wide text-white">
-            Rent<span className="text-yellow-300">AUTO</span>
+          <Link
+            to="/"
+            className="text-2xl font-bold tracking-wide text-white pl-0 flex"
+          >
+            <img src="./public/car.png.png" className="w-12" alt="" />
+
+            <i className="fa-solid fa-car mt-3">
+              Rent<span className="text-yellow-300">AUTO</span>
+            </i>
           </Link>
 
           {/* Show only if user is a User (not Admin) and not in "/" */}
@@ -58,7 +65,7 @@ function Navbar() {
           )}
         </div>
 
-        {/* 🔐 Right side - Auth area */}
+        {/* Right side */}
         <div className="relative" ref={dropdownRef}>
           {user ? (
             <div className="relative inline-block text-left">
@@ -80,6 +87,15 @@ function Navbar() {
                       className="block px-4 py-2 hover:bg-yellow-600 hover:text-white"
                     >
                       My Bookings
+                    </Link>
+                  )}
+                  {isUser && (
+                    <Link
+                      to="/userProfile"
+                      onClick={() => setDropdownOpen(false)}
+                      className="block px-4 py-2 hover:bg-yellow-600 hover:text-white"
+                    >
+                      Profile
                     </Link>
                   )}
                   <button

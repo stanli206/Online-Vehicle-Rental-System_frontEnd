@@ -12,8 +12,6 @@ const Booking = () => {
   const navigate = useNavigate();
   const vehicle = location.state?.vehicle;
 
-
-  
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({
     rating: 0,
@@ -26,7 +24,6 @@ const Booking = () => {
       try {
         const response = await axios.get(
           `http://localhost:5000/api/review/getAllReviewById/${vehicle._id}`
-          
         );
         window.scrollTo(0, 0);
         setReviews(response.data);
@@ -37,7 +34,6 @@ const Booking = () => {
     };
 
     fetchReviews();
-   
   }, [vehicle._id, user?.token]);
 
   // Add these new functions for handling reviews
@@ -73,7 +69,6 @@ const Booking = () => {
     const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
     return (sum / reviews.length).toFixed(1);
   };
-
 
   const [formData, setFormData] = useState({
     startDate: null,
@@ -189,9 +184,9 @@ const Booking = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 bg-gray-50 min-h-screen pt-28">
+    <div className="container mx-auto p-6 bg-gray-50 min-h-screen pt-18">
       <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
-        Book Your Ride
+        Book Your <span className="text-yellow-700">Ride</span>
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white shadow-md p-6 rounded-md">
@@ -307,6 +302,12 @@ const Booking = () => {
               >
                 Proceed to Pay
               </button>
+              <button
+                onClick={() => navigate("/")}
+                className="border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium"
+              >
+                cancel 
+              </button>
             </div>
           )}
         </div>
@@ -317,7 +318,7 @@ const Booking = () => {
       <div className="bg-white shadow-md p-6 rounded-md mt-8">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-2xl font-semibold text-gray-800">
-            Customer Reviews
+            Customer <span className="text-yellow-700">Reviews</span>
           </h3>
           <div className="flex items-center">
             <span className="text-xl font-bold mr-2">

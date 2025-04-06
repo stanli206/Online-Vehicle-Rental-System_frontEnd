@@ -31,7 +31,7 @@ const Payment = () => {
         "http://localhost:5000/api/payment/createPayment", // Updated endpoint
         {
           bookingId: booking.id,
-          paymentMethod: "card", 
+          paymentMethod: "card",
         },
         {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -67,9 +67,11 @@ const Payment = () => {
 
   // Main payment form
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 pt-28">
       <div className="max-w-md mx-auto bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-2xl font-bold mb-6">Complete Payment</h2>
+        <h2 className="text-2xl font-bold mb-6">
+          Complete <span className="text-yellow-600 ">Payment</span>
+        </h2>
 
         <div className="mb-6 bg-gray-100 p-4 rounded-md">
           <h3 className="font-semibold mb-2">Your Booking:</h3>
@@ -87,11 +89,13 @@ const Payment = () => {
         <button
           onClick={handlePayment}
           disabled={isProcessing}
-          className={`w-full py-3 rounded-md text-white ${
-            isProcessing ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"
+          className={`w-full py-3 text-black border border-black rounded-md transition duration-200 font-medium ${
+            isProcessing
+              ? "bg-gray-400 cursor-not-allowed"
+              : "hover:bg-yellow-600"
           }`}
         >
-          {isProcessing ? "Processing..." : "Pay now"}
+          {isProcessing ? "Processing..." : "Pay now with card"}
         </button>
 
         {error && (

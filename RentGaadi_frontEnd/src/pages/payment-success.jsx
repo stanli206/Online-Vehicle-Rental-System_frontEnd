@@ -1,8 +1,10 @@
 import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 const PaymentSuccess = () => {
+  const navigate = useNavigate();
+
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const bookingId = searchParams.get("bookingId");
@@ -28,9 +30,16 @@ const PaymentSuccess = () => {
   };
 
   return (
-    <div className="text-center p-5">
+    <div className="text-center p-5 pt-30">
       <h1 className="text-green-600 text-2xl font-bold">Payment Successful!</h1>
       <p>Booking Confirmed ✅</p>
+      <br />
+      <button
+        onClick={() => navigate("/")}
+        className="border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium"
+      >
+        ← Back to Home
+      </button>
     </div>
   );
 };
