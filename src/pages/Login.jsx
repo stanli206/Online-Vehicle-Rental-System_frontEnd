@@ -20,17 +20,19 @@ const Login = () => {
         "https://rentgaadi-backend.onrender.com/api/auth/login",
         formData
       );
-      // console.log(response);
-
-      login(response.data); // Update Context API state
+      login(response.data); // Update context state
       if (response.data.role?.toLowerCase() === "admin") {
-        navigate("/admin"); // Navigate to Admin Dashboard
+        navigate("/admin");
       } else {
-        navigate("/"); // Otherwise, navigate to home
-      } // Redirect to home after login
+        navigate("/");
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     }
+  };
+
+  const handleRegisterRedirect = () => {
+    navigate("/register");
   };
 
   return (
@@ -66,9 +68,12 @@ const Login = () => {
         </form>
         <p className="text-center text-sm mt-2">
           Don't have an account?{" "}
-          <a href="/register" className="text-yellow-800">
+          <button
+            onClick={handleRegisterRedirect}
+            className="text-yellow-800 underline"
+          >
             Register
-          </a>
+          </button>
         </p>
       </div>
     </div>
