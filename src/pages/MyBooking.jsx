@@ -56,16 +56,17 @@ const MyBooking = () => {
   };
 
   const handleCancelRide = async (bookingId, vehicleId) => {
-    const action =
-      bookings.find((b) => b._id === bookingId)?.status === "pending"
-        ? "remove"
-        : "cancel";
-    console.log(action);
+    const booking = bookings.find((b) => b._id === bookingId);
+    const action = booking?.status === "pending" ? "remove" : "cancel";
 
     const message =
       action === "remove"
         ? "Are you sure you want to remove this pending booking?"
-        : "Are you sure you want to cancel this ride?";
+        : `Are you sure you want to cancel this ride?${
+            booking?.payment?.status === "completed"
+              ? "\n\nNote: Your payment will be refunded within 5-7 business days."
+              : ""
+          }`;
 
     if (!window.confirm(message)) {
       return;
@@ -83,9 +84,16 @@ const MyBooking = () => {
         }
       );
 
-      alert(
-        `Booking ${action === "remove" ? "removed" : "cancelled"} successfully!`
-      );
+      let successMessage = `Booking ${
+        action === "remove" ? "removed" : "cancelled"
+      } successfully!`;
+
+      if (action === "cancel" && booking?.payment?.status === "completed") {
+        successMessage +=
+          "\n\nYour refund will be processed within 5-7 business days.";
+      }
+
+      alert(successMessage);
       fetchUserBookings();
     } catch (error) {
       console.error(`Error ${action}ing booking:`, error);
