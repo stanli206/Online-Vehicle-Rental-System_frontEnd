@@ -26,7 +26,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/vehicle/getAllVehicles", {
+      .get("https://rentgaadi-backend.onrender.com/api/vehicle/getAllVehicles", {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
