@@ -15,11 +15,11 @@ const Home = () => {
     const fetchVehicles = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/vehicle/getAllVehicles"
+          "https://rentgaadi-backend.onrender.com/api/vehicle/getAllVehicles"
         );
         setVehicles(response.data.data);
 
-        //Fetch ratings for each vehicle //http://localhost:5000
+        //Fetch ratings for each vehicle //https://rentgaadi-backend.onrender.com
         response.data.data.forEach((vehicle) => {
           fetchRating(vehicle._id);
         });
@@ -38,7 +38,7 @@ const Home = () => {
   const fetchRating = async (vehicleId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/review/${vehicleId}/average-rating`
+        `https://rentgaadi-backend.onrender.com/api/review/${vehicleId}/average-rating`
       );
       setRatings((prevRatings) => ({
         ...prevRatings,
@@ -67,6 +67,7 @@ const Home = () => {
 
   return (
     <div className="bg-gray-100">
+
       {/* Hero Section */}
       <section
         className="bg-cover bg-center h-[500px] flex items-center justify-center text-white text-center"
@@ -304,7 +305,7 @@ const Home = () => {
                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                     />
                   </svg>
-                  info@yourcarrental.com
+                  info@rentauto.com
                 </li>
               </ul>
             </div>
@@ -331,7 +332,7 @@ const Home = () => {
           {/* Copyright and Social */}
           <div className="border-t border-gray-800 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} Your Car Rental. All rights reserved.
+              © {new Date().getFullYear()} RentAUTO. All rights reserved.
             </p>
             <div className="flex space-x-4 mt-4 md:mt-0">
               <a href="#" className="text-gray-400 hover:text-yellow-500">

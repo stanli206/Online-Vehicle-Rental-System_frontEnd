@@ -20,7 +20,7 @@ const UserProfile = () => {
   const fetchProfile = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/user/userProfile/${user._id}`,
+        `https://rentgaadi-backend.onrender.com/api/user/userProfile/${user._id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -43,7 +43,7 @@ const UserProfile = () => {
     setLoading(true);
     try {
       await axios.put(
-        `http://localhost:5000/api/user/updateProfile/${user._id}`,
+        `https://rentgaadi-backend.onrender.com/api/user/updateProfile/${user._id}`,
         updatedProfile,
         {
           headers: {

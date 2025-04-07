@@ -9,7 +9,7 @@ const Register = () => {
     email: "",
     password: "",
     phone: "",
-    // role: "user", // 
+    // role: "user", //
     // profilePicture: null,
   });
   const [error, setError] = useState("");
@@ -25,10 +25,12 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formDataObj = new FormData();
-    Object.keys(formData).forEach((key) => formDataObj.append(key, formData[key]));
+    Object.keys(formData).forEach((key) =>
+      formDataObj.append(key, formData[key])
+    );
 
     try {
-      await axios.post("http://localhost:5000/api/auth/register", formDataObj, {
+      await axios.post("https://rentgaadi-backend.onrender.com/api/auth/register", formDataObj, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       navigate("/login"); // Redirect after successful registration
@@ -47,7 +49,7 @@ const Register = () => {
             type="text"
             name="name"
             placeholder="Full Name"
-            className="w-full px-3 py-2 border rounded-md mb-3"
+            className="w-full px-3 py-2 border rounded-md mb-3 focus:outline-none focus:ring-2 focus:ring-yellow-600"
             value={formData.name}
             onChange={handleChange}
             required
@@ -56,7 +58,7 @@ const Register = () => {
             type="email"
             name="email"
             placeholder="Email"
-            className="w-full px-3 py-2 border rounded-md mb-3"
+            className="w-full px-3 py-2 border rounded-md mb-3 focus:outline-none focus:ring-2 focus:ring-yellow-600"
             value={formData.email}
             onChange={handleChange}
             required
@@ -65,7 +67,7 @@ const Register = () => {
             type="password"
             name="password"
             placeholder="Password"
-            className="w-full px-3 py-2 border rounded-md mb-3"
+            className="w-full px-3 py-2 border rounded-md mb-3 focus:outline-none focus:ring-2 focus:ring-yellow-600"
             value={formData.password}
             onChange={handleChange}
             required
@@ -74,18 +76,29 @@ const Register = () => {
             type="text"
             name="phone"
             placeholder="Phone Number"
-            className="w-full px-3 py-2 border rounded-md mb-3"
+            className="w-full px-3 py-2 border rounded-md mb-3 focus:outline-none focus:ring-2 focus:ring-yellow-600"
             value={formData.phone}
             onChange={handleChange}
             required
           />
-          <input type="file" name="profilePicture" onChange={handleFileChange} className="mb-3" />
-          <button type="submit" className="w-full bg-green-500 text-white py-2 rounded-md">
+          {/* <input
+            type="file"
+            name="profilePicture"
+            onChange={handleFileChange}
+            className="mb-3"
+          /> */}
+          <button
+            type="submit"
+            className="w-full border border-black hover:bg-yellow-600 text-black py-2 rounded-md"
+          >
             Register
           </button>
         </form>
         <p className="text-center text-sm mt-2">
-          Already have an account? <a href="/login" className="text-blue-500">Login</a>
+          Already have an account?{" "}
+          <a href="/login" className="text-green-500">
+            Login
+          </a>
         </p>
       </div>
     </div>

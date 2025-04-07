@@ -54,7 +54,14 @@ function Navbar() {
               Home
             </Link>
           )}
-
+          {isUser && location.pathname === "/" && (
+            <Link
+              to="/"
+              className="text-white hover:text-yellow-300 font-medium"
+            >
+              Dashboard
+            </Link>
+          )}
           {isAdmin && (
             <Link
               to="/admin"

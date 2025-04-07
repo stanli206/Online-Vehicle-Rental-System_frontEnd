@@ -23,7 +23,7 @@ const Booking = () => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/review/getAllReviewById/${vehicle._id}`
+          `https://rentgaadi-backend.onrender.com/api/review/getAllReviewById/${vehicle._id}`
         );
         window.scrollTo(0, 0);
         setReviews(response.data);
@@ -48,7 +48,7 @@ const Booking = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/review/createReview/${vehicle._id}`,
+        `https://rentgaadi-backend.onrender.com/api/review/createReview/${vehicle._id}`,
         newReview,
         {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -83,7 +83,7 @@ const Booking = () => {
     const fetchBookedDates = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/booking/booked-dates/${vehicle._id}`
+          `https://rentgaadi-backend.onrender.com/api/booking/booked-dates/${vehicle._id}`
         );
         setBookedDates(response.data.bookedDates.map((date) => new Date(date)));
       } catch (error) {
@@ -119,7 +119,7 @@ const Booking = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/booking/createBooking",
+        "https://rentgaadi-backend.onrender.com/api/booking/createBooking",
         bookingData,
         {
           headers: { Authorization: `Bearer ${user.token}` },
