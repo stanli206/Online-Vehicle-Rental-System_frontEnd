@@ -157,7 +157,7 @@ const AdminDashboard = () => {
   const handleDeleteVehicle = (id) => {
     if (confirm("Are you sure you want to delete this vehicle?")) {
       axios
-        .delete(`http://localhost:5000/api/vehicle/delete/${id}`, {
+        .delete(`https://rentgaadi-backend.onrender.com/api/vehicle/delete/${id}`, {
           headers: { Authorization: `Bearer ${user.token}` },
         })
         .then(() => {
