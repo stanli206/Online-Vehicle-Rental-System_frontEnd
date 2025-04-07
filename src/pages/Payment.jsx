@@ -28,7 +28,7 @@ const Payment = () => {
 
     try {
       const response = await axios.post(
-        "https://rentgaadi-backend.onrender.com/api/payment/createPayment", // Updated endpoint
+        "http://localhost:5000/api/payment/createPayment", // Updated endpoint
         {
           bookingId: booking.id,
           paymentMethod: "card",

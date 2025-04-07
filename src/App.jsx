@@ -18,6 +18,7 @@ import PaymentSuccess from "./pages/payment-success";
 import PaymentFailed from "./pages/PaymentFailed";
 import MyBooking from "./pages/MyBooking";
 import UserProfile from "./pages/UserProfile";
+import UserDashboard from "./pages/UserDashboard";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -31,6 +32,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/userDashboard" element={<UserDashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/booking" element={<Booking />} />

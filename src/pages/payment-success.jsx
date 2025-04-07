@@ -18,7 +18,7 @@ const PaymentSuccess = () => {
 
   const updatePaymentStatus = async () => {
     try {
-      await axios.post("https://rentgaadi-backend.onrender.com/api/payment/success", {
+      await axios.post("http://localhost:5000/api/payment/success", {
         sessionId,
         bookingId,
         userId,

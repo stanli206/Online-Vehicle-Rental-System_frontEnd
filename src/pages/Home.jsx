@@ -15,11 +15,11 @@ const Home = () => {
     const fetchVehicles = async () => {
       try {
         const response = await axios.get(
-          "https://rentgaadi-backend.onrender.com/api/vehicle/getAllVehicles"
+          "http://localhost:5000/api/vehicle/getAllVehicles"
         );
         setVehicles(response.data.data);
 
-        //Fetch ratings for each vehicle
+        //Fetch ratings for each vehicle //http://localhost:5000
         response.data.data.forEach((vehicle) => {
           fetchRating(vehicle._id);
         });
@@ -38,7 +38,7 @@ const Home = () => {
   const fetchRating = async (vehicleId) => {
     try {
       const response = await axios.get(
-        `https://rentgaadi-backend.onrender.com/api/review/${vehicleId}/average-rating`
+        `http://localhost:5000/api/review/${vehicleId}/average-rating`
       );
       setRatings((prevRatings) => ({
         ...prevRatings,

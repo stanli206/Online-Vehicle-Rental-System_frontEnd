@@ -16,7 +16,7 @@ const MyBooking = () => {
   const fetchUserBookings = async () => {
     try {
       const res = await axios.get(
-        `https://rentgaadi-backend.onrender.com/api/booking/booking&payment/${user._id}`,
+        `http://localhost:5000/api/booking/booking&payment/${user._id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -35,7 +35,7 @@ const MyBooking = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `https://rentgaadi-backend.onrender.com/api/review/createReview/${selectedVehicle._id}`,
+        `http://localhost:5000/api/review/createReview/${selectedVehicle._id}`,
         newReview,
         {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -74,7 +74,7 @@ const MyBooking = () => {
 
     try {
       await axios.put(
-        `https://rentgaadi-backend.onrender.com/api/booking/updateStatus/${bookingId}`,
+        `http://localhost:5000/api/booking/updateStatus/${bookingId}`,
         {
           status: action,
           vehicleId: vehicleId,

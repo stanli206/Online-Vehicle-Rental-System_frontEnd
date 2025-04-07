@@ -7,8 +7,13 @@ const AdminDashboard = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [vehicles, setVehicles] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const editFormRef = useRef(null);
+  const [users, setUsers] = useState([]); // 🆕 User profile state
+  const [userLoading, setUserLoading] = useState(true);
+  const [completedPayments, setCompletedPayments] = useState([]);
+  const [paymentsLoading, setPaymentsLoading] = useState(true);
   const [newVehicle, setNewVehicle] = useState({
     make: "",
     model: "",
@@ -26,7 +31,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     axios
-      .get("https://rentgaadi-backend.onrender.com/api/vehicle/getAllVehicles", {
+      .get("http://localhost:5000/api/vehicle/getAllVehicles", {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
@@ -36,6 +41,33 @@ const AdminDashboard = () => {
       .catch((err) => {
         console.log(err);
         setLoading(false);
+      });
+
+    // 🆕 Fetch all user profiles
+    axios
+      .get("http://localhost:5000/api/user/getAllProfile", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
+      .then((res) => {
+        setUsers(res.data.data || []);
+        setUserLoading(false);
+      })
+      .catch((err) => {
+        console.log("Error fetching users:", err);
+        setUserLoading(false);
+      });
+    // 🆕 Fetch Completed Payments
+    axios
+      .get("http://localhost:5000/api/user/users&bookings&payments", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
+      .then((res) => {
+        setCompletedPayments(res.data.data || []);
+        setPaymentsLoading(false);
+      })
+      .catch((err) => {
+        console.log("Error fetching payments:", err);
+        setPaymentsLoading(false);
       });
   }, [user, navigate]);
 
@@ -122,9 +154,9 @@ const AdminDashboard = () => {
       formData.append("images", newVehicle.images);
       // Add image if available
     }
-//http://localhost:5000
+    //http://localhost:5000
     axios
-      .put(`https://rentgaadi-backend.onrender.com/api/vehicle/update/${editId}`, formData, {
+      .put(`http://localhost:5000/api/vehicle/update/${editId}`, formData, {
         headers: {
           Authorization: `Bearer ${user.token}`,
           "Content-Type": "multipart/form-data",
@@ -157,7 +189,7 @@ const AdminDashboard = () => {
   const handleDeleteVehicle = (id) => {
     if (confirm("Are you sure you want to delete this vehicle?")) {
       axios
-        .delete(`https://rentgaadi-backend.onrender.com/api/vehicle/delete/${id}`, {
+        .delete(`http://localhost:5000/api/vehicle/delete/${id}`, {
           headers: { Authorization: `Bearer ${user.token}` },
         })
         .then(() => {
@@ -390,6 +422,139 @@ const AdminDashboard = () => {
                 </div>
               </div>
             ))}
+          </div>
+          {/* ✅ NEW SECTION: User Profiles */}
+          <div className="mt-16">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+              👥 All Registered Users
+            </h2>
+
+            {userLoading ? (
+              <p className="text-center">Loading users...</p>
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {users.map((user) => (
+                  <div
+                    key={user._id}
+                    className="bg-white p-4 rounded shadow border flex items-center gap-4"
+                  >
+                    <img
+                      src={user.profilePicture || "/default-profile.png"}
+                      alt={user.name}
+                      className="w-16 h-16 object-cover rounded-full border"
+                    />
+                    <div>
+                      <h3 className="text-lg font-semibold">{user.name}</h3>
+                      <p className="text-sm text-gray-600">{user.email}</p>
+                      <p className="text-sm text-gray-600">📞 {user.phone}</p>
+                      <p className="text-sm font-medium text-purple-600">
+                        🛡️ {user.role}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          {/* ✅ NEW SECTION: Completed Payments */}
+          <div className="mt-16">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+              💸 Completed Payments (Detailed)
+            </h2>
+
+            {paymentsLoading ? (
+              <p className="text-center">Loading payment records...</p>
+            ) : completedPayments.length === 0 ? (
+              <p className="text-center text-gray-500">
+                No completed payments found.
+              </p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="min-w-[1000px] bg-white shadow-md rounded-lg overflow-hidden">
+                  <thead className="bg-gray-200 text-gray-700 text-sm">
+                    <tr>
+                      <th className="py-3 px-4">User Name</th>
+                      <th className="py-3 px-4">Email</th>
+                      <th className="py-3 px-4">Phone</th>
+                      <th className="py-3 px-4">Role</th>
+                      <th className="py-3 px-4">Vehicle</th>
+                      <th className="py-3 px-4">Year</th>
+                      <th className="py-3 px-4">Price/Day</th>
+                      <th className="py-3 px-4">Booking Dates</th>
+                      <th className="py-3 px-4">Pickup</th>
+                      <th className="py-3 px-4">Drop</th>
+                      <th className="py-3 px-4">Status</th>
+                      <th className="py-3 px-4">Amount Paid</th>
+                      <th className="py-3 px-4">Transaction ID</th>
+                      <th className="py-3 px-4">Method</th>
+                      <th className="py-3 px-4">Paid On</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm">
+                    {completedPayments.map((item, idx) => {
+                      const vehicle = item.booking?.vehicle || {};
+                      return (
+                        <tr
+                          key={idx}
+                          className="border-t border-gray-200 hover:bg-gray-50"
+                        >
+                          <td className="py-2 px-4">{item.user?.name}</td>
+                          <td className="py-2 px-4">{item.user?.email}</td>
+                          <td className="py-2 px-4">{item.user?.phone}</td>
+                          <td className="py-2 px-4 capitalize">
+                            {item.user?.role}
+                          </td>
+
+                          <td className="py-2 px-4">
+                            {vehicle.make} {vehicle.model}
+                          </td>
+                          <td className="py-2 px-4">{vehicle.year}</td>
+                          <td className="py-2 px-4">
+                            ₹{vehicle.pricePerDay || vehicle.rentPerHour}
+                          </td>
+
+                          <td className="py-2 px-4">
+                            {item.booking?.startDate !== "-" ? (
+                              <>
+                                {new Date(
+                                  item.booking.startDate
+                                ).toLocaleDateString()}{" "}
+                                to{" "}
+                                {new Date(
+                                  item.booking.endDate
+                                ).toLocaleDateString()}
+                              </>
+                            ) : (
+                              "-"
+                            )}
+                          </td>
+                          <td className="py-2 px-4">
+                            {item.booking?.pickupLocation}
+                          </td>
+                          <td className="py-2 px-4">
+                            {item.booking?.dropLocation}
+                          </td>
+                          <td className="py-2 px-4 capitalize">
+                            {item.booking?.status}
+                          </td>
+
+                          <td className="py-2 px-4 text-green-600 font-semibold">
+                            ₹{item.amount}
+                          </td>
+                          <td className="py-2 px-4 text-sm break-all">
+                            {item.transactionId}
+                          </td>
+                          <td className="py-2 px-4">{item.paymentMethod}</td>
+                          <td className="py-2 px-4">
+                            {new Date(item.createdAt).toLocaleString()}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       )}
