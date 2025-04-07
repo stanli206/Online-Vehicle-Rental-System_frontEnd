@@ -67,7 +67,6 @@ const Home = () => {
 
   return (
     <div className="bg-gray-100">
-
       {/* Hero Section */}
       <section
         className="bg-cover bg-center h-[500px] flex items-center justify-center text-white text-center"
@@ -140,8 +139,7 @@ const Home = () => {
                     />
                     <h2 className="text-2xl font-semibold">{`${vehicle.make} ${vehicle.model}`}</h2>
                     <p className="text-gray-600">
-                      {vehicle.year}
-                      {/*- {vehicle.location} */}
+                      {vehicle.year}- {vehicle.location}
                     </p>
                     <p className="text-lg font-bold text-gray-800">
                       ₹{vehicle.pricePerDay}/day
