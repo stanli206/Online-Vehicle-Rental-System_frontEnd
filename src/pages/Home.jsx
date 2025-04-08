@@ -19,7 +19,7 @@ const Home = () => {
         );
         setVehicles(response.data.data);
 
-        //Fetch ratings for each vehicle //http://localhost:5000
+        //Fetch ratings for each vehicle
         response.data.data.forEach((vehicle) => {
           fetchRating(vehicle._id);
         });
@@ -138,9 +138,21 @@ const Home = () => {
                       className="w-full h-48 object-cover rounded-md mb-4"
                     />
                     <h2 className="text-2xl font-semibold">{`${vehicle.make} ${vehicle.model}`}</h2>
-                    <p className="text-gray-600">
-                      {vehicle.year}- {vehicle.location}
-                    </p>
+                    <p className="text-gray-600">{vehicle.year}</p>
+                    <div className="flex items-center text-gray-500">
+                      <svg
+                        className="h-4 w-4 text-gray-500 mr-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      {vehicle.location}
+                    </div>
                     <p className="text-lg font-bold text-gray-800">
                       ₹{vehicle.pricePerDay}/day
                     </p>
@@ -161,7 +173,7 @@ const Home = () => {
                       </span>
                     )}
 
-                    {/* ⭐ Rating Section */}
+                    {/* Rating Section */}
                     <div className="flex items-end mt-2">
                       <span className="text-gray-600 text-sm font-medium mr-2">
                         {ratingData.averageRating}/5

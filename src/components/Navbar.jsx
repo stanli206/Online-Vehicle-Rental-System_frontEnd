@@ -38,7 +38,7 @@ function Navbar() {
             to="/"
             className="text-2xl font-bold tracking-wide text-white pl-0 flex"
           >
-            <img src="/car.png" className="w-12" alt="" />
+            <img src="/car.png" className="w-14 h-14 mb-1" alt="" />
 
             <i className="fa-solid fa-car mt-3">
               Rent<span className="text-yellow-300">AUTO</span>
