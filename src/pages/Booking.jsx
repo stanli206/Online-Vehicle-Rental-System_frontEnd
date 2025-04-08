@@ -19,6 +19,7 @@ const Booking = () => {
   });
   const [showReviewForm, setShowReviewForm] = useState(false);
 
+  // Fetch reviews when component mounts
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -29,14 +30,13 @@ const Booking = () => {
         setReviews(response.data);
       } catch (error) {
         console.error("Failed to fetch reviews:", error);
-        alert("Failed to load reviews. Please try again later.");
       }
     };
 
     fetchReviews();
   }, [vehicle._id, user?.token]);
 
-  // Add these new functions for handling reviews
+  // Handle review submission
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,12 +64,14 @@ const Booking = () => {
     }
   };
 
+  // Calculate average rating
   const calculateAverageRating = () => {
     if (reviews.length === 0) return 0;
     const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
     return (sum / reviews.length).toFixed(1);
   };
 
+  // Booking form state
   const [formData, setFormData] = useState({
     startDate: null,
     endDate: null,
@@ -79,6 +81,7 @@ const Booking = () => {
   const [bookingDetails, setBookingDetails] = useState(null);
   const [bookedDates, setBookedDates] = useState([]);
 
+  // Fetch booked dates
   useEffect(() => {
     const fetchBookedDates = async () => {
       try {
@@ -94,10 +97,12 @@ const Booking = () => {
     fetchBookedDates();
   }, [vehicle._id]);
 
+  // Handle date changes
   const handleDateChange = (date, field) => {
     setFormData({ ...formData, [field]: date });
   };
 
+  // Handle booking submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -115,7 +120,6 @@ const Booking = () => {
       endDate: moment(formData.endDate).format(),
       endTime: moment(formData.endTime).format("HH:mm"),
     };
-    console.log(bookingData);
 
     try {
       const response = await axios.post(
@@ -125,10 +129,8 @@ const Booking = () => {
           headers: { Authorization: `Bearer ${user.token}` },
         }
       );
-      console.log(response);
 
       if (response.status === 201) {
-        console.log(response.data.booking);
         setBookingDetails(response.data.booking);
       } else {
         alert("Booking failed! Please try again.");
@@ -139,17 +141,9 @@ const Booking = () => {
     }
   };
 
+  // Navigation functions
   const handleProceedToPay = () => {
-    if (!bookingDetails) {
-      console.error("Booking details missing:", bookingDetails);
-      return;
-    }
-
-    console.log("Passing to payment:", {
-      booking: bookingDetails,
-      vehicle: vehicle,
-    });
-
+    if (!bookingDetails) return;
     navigate("/payment", {
       state: {
         booking: {
@@ -168,7 +162,6 @@ const Booking = () => {
     });
   };
 
-  // ✅ Clear button function to reset input fields
   const handleClear = () => {
     setFormData({
       startDate: null,
@@ -178,153 +171,204 @@ const Booking = () => {
     });
   };
 
-  // ✅ Cancel button function to redirect to home page
   const handleCancel = () => {
     navigate("/");
   };
 
   return (
-    <div className="container mx-auto p-6 bg-gray-50 min-h-screen pt-18">
+    <div className="container mx-auto p-4 md:p-6 bg-gray-50 min-h-screen">
+      {/* Back button */}
+      <button
+        onClick={() => navigate(-1)}
+        className="border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium mb-6"
+      >
+        ← Back
+      </button>
+
+      {/* Main heading */}
       <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
         Book Your <span className="text-yellow-700">Ride</span>
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white shadow-md p-6 rounded-md">
-          <img
-            src={vehicle.images || "/default-image.jpg"}
-            alt={vehicle.model}
-            className="w-full h-64 object-cover rounded-md mb-4"
-          />
-          <h3 className="text-2xl font-semibold text-gray-800">{`${vehicle.make} ${vehicle.model}`}</h3>
-          <p className="text-lg font-bold text-gray-800">
-            ₹{vehicle.pricePerDay}/day
-          </p>
-          <p className="text-gray-700"> {vehicle.year} Model</p>
-          <p className="text-gray-700">{vehicle.seats} seater</p>
-          <p className="text-gray-700">
-            {vehicle.transmission} transmission - {vehicle.fuelType} Engine
-          </p>
-          <p className="text-gray-700">
-            <span className="font-semibold">vehicle location :</span>{" "}
-            {vehicle.location}
-          </p>
-          <p className="text-gray-700">description : {vehicle.description}</p>
-        </div>
-        <div className="bg-white shadow-md p-6 rounded-md">
-          {!bookingDetails ? (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <DatePicker
-                selected={formData.startDate}
-                onChange={(date) => handleDateChange(date, "startDate")}
-                className="border px-4 py-2 rounded-md bg-gray-100 text-gray-700 w-full"
-                placeholderText="Select start date"
-                dateFormat="dd/MM/yyyy"
-                minDate={new Date()}
-                required
-                excludeDates={bookedDates}
-                highlightDates={bookedDates}
-                onKeyDown={(e) => e.preventDefault()}
-              />
-              <DatePicker
-                selected={formData.startTime}
-                onChange={(date) => handleDateChange(date, "startTime")}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={30}
-                timeCaption="Time"
-                dateFormat="h:mm aa"
-                className="border px-4 py-2 rounded-md bg-gray-100 text-gray-700 w-full"
-                placeholderText="Select start time"
-                required
-              />
-              <DatePicker
-                selected={formData.endDate}
-                onChange={(date) => handleDateChange(date, "endDate")}
-                className="border px-4 py-2 rounded-md bg-gray-100 text-gray-700 w-full"
-                placeholderText="Select end date"
-                dateFormat="dd/MM/yyyy"
-                minDate={formData.startDate}
-                required
-                excludeDates={bookedDates}
-                highlightDates={bookedDates}
-                onKeyDown={(e) => e.preventDefault()}
-              />
-              <DatePicker
-                selected={formData.endTime}
-                onChange={(date) => handleDateChange(date, "endTime")}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={30}
-                timeCaption="Time"
-                dateFormat="h:mm aa"
-                className="border px-4 py-2 rounded-md bg-gray-100 text-gray-700 w-full"
-                placeholderText="Select end time"
-                required
-              />
 
-              <div className="flex gap-2">
+      {/* Vehicle and booking form section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        {/* Vehicle details card */}
+        <div className="bg-white shadow-md p-6 rounded-lg border border-gray-200">
+          <div className="mb-4">
+            <img
+              src={vehicle.images || "/default-image.jpg"}
+              alt={vehicle.model}
+              className="w-full h-64 object-cover rounded-md"
+            />
+          </div>
+
+          <h3 className="text-2xl font-semibold text-gray-800 mb-2">
+            {vehicle.make} {vehicle.model}
+          </h3>
+
+          <div className="space-y-2 mb-4">
+            <p className="text-lg font-bold text-gray-800">
+              ₹{vehicle.pricePerDay}{" "}
+              <span className="text-sm font-normal">per day</span>
+            </p>
+            <p className="text-gray-700">{vehicle.year} Model</p>
+            <p className="text-gray-700">{vehicle.seats} seater</p>
+            <p className="text-gray-700">
+              {vehicle.transmission} • {vehicle.fuelType}
+            </p>
+            <p className="text-gray-700">
+              <span className="font-medium">Location:</span> {vehicle.location}
+            </p>
+          </div>
+
+          <p className="text-gray-700 border-t pt-3">{vehicle.description}</p>
+        </div>
+
+        {/* Booking form */}
+        <div className="bg-white shadow-md p-6 rounded-lg border border-gray-200">
+          {!bookingDetails ? (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                Select Rental Period
+              </h3>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-gray-700 mb-1">Start Date</label>
+                  <DatePicker
+                    selected={formData.startDate}
+                    onChange={(date) => handleDateChange(date, "startDate")}
+                    className="border px-4 py-2 rounded-md w-full"
+                    placeholderText="Select start date"
+                    dateFormat="dd/MM/yyyy"
+                    minDate={new Date()}
+                    required
+                    excludeDates={bookedDates}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 mb-1">Start Time</label>
+                  <DatePicker
+                    selected={formData.startTime}
+                    onChange={(date) => handleDateChange(date, "startTime")}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={30}
+                    timeCaption="Time"
+                    dateFormat="h:mm aa"
+                    className="border px-4 py-2 rounded-md w-full"
+                    placeholderText="Select start time"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 mb-1">End Date</label>
+                  <DatePicker
+                    selected={formData.endDate}
+                    onChange={(date) => handleDateChange(date, "endDate")}
+                    className="border px-4 py-2 rounded-md w-full"
+                    placeholderText="Select end date"
+                    dateFormat="dd/MM/yyyy"
+                    minDate={formData.startDate}
+                    required
+                    excludeDates={bookedDates}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 mb-1">End Time</label>
+                  <DatePicker
+                    selected={formData.endTime}
+                    onChange={(date) => handleDateChange(date, "endTime")}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={30}
+                    timeCaption="Time"
+                    dateFormat="h:mm aa"
+                    className="border px-4 py-2 rounded-md w-full"
+                    placeholderText="Select end time"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <button
                   type="submit"
-                  className="mt-2 bg-blue-500 text-white py-2 rounded-md w-full hover:bg-blue-600 transition"
+                  className="border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium flex-1"
                 >
                   Confirm Booking
                 </button>
                 <button
                   type="button"
                   onClick={handleClear}
-                  className="mt-2 bg-gray-400 text-white py-2 rounded-md w-full hover:bg-gray-500 transition"
+                  className="border border-black px-4 py-2 rounded hover:bg-gray-200 transition duration-200 font-medium flex-1"
                 >
                   Clear
                 </button>
                 <button
                   type="button"
                   onClick={handleCancel}
-                  className="mt-2 bg-red-500 text-white py-2 rounded-md w-full hover:bg-red-600 transition"
+                  className="border border-black px-4 py-2 rounded hover:bg-red-200 transition duration-200 font-medium flex-1"
                 >
                   Cancel
                 </button>
               </div>
             </form>
           ) : (
-            <div className="text-center">
-              <h3 className="text-xl font-bold text-gray-800">
-                Booking Confirmed!
-              </h3>
-              <p>User: {user.name}</p>
-              <p>
-                Vehicle: {vehicle.make} {vehicle.model}
-              </p>
-              <p>Total Days: {bookingDetails.totalDays}</p>
-              <p>Total Price: ₹{bookingDetails.totalPrice}</p>
-              <button
-                onClick={handleProceedToPay}
-                className="mt-4 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition"
-              >
-                Proceed to Pay
-              </button>
-              <button
-                onClick={() => navigate("/")}
-                className="border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium"
-              >
-                cancel 
-              </button>
+            <div className="text-center space-y-4">
+              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                <h3 className="text-xl font-bold">Booking Confirmed!</h3>
+              </div>
+
+              <div className="space-y-2 text-left">
+                <p>
+                  <span className="font-medium">User:</span> {user.name}
+                </p>
+                <p>
+                  <span className="font-medium">Vehicle:</span> {vehicle.make}{" "}
+                  {vehicle.model}
+                </p>
+                <p>
+                  <span className="font-medium">Total Days:</span>{" "}
+                  {bookingDetails.totalDays}
+                </p>
+                <p>
+                  <span className="font-medium">Total Price:</span> ₹
+                  {bookingDetails.totalPrice}
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                <button
+                  onClick={handleProceedToPay}
+                  className="border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium flex-1"
+                >
+                  Proceed to Pay
+                </button>
+                <button
+                  onClick={() => navigate("/")}
+                  className="border border-black px-4 py-2 rounded hover:bg-gray-200 transition duration-200 font-medium flex-1"
+                >
+                  Back to Home
+                </button>
+              </div>
             </div>
           )}
         </div>
       </div>
 
-      {/* review */}
-
-      <div className="bg-white shadow-md p-6 rounded-md mt-8">
-        <div className="flex justify-between items-center mb-6">
-          <h3 className="text-2xl font-semibold text-gray-800">
+      {/* Reviews section */}
+      <div className="bg-white shadow-md p-6 rounded-lg border border-gray-200">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-3 sm:mb-0">
             Customer <span className="text-yellow-700">Reviews</span>
           </h3>
-          <div className="flex items-center">
-            <span className="text-xl font-bold mr-2">
-              {calculateAverageRating()}/5
-            </span>
-            <div className="flex">
+
+          <div className="flex items-center bg-gray-100 px-3 py-2 rounded-lg">
+            <div className="flex mr-2">
               {[...Array(5)].map((_, i) => (
                 <svg
                   key={i}
@@ -340,24 +384,29 @@ const Booking = () => {
                 </svg>
               ))}
             </div>
-            <span className="ml-2 text-gray-600">
-              ({reviews.length} reviews)
-            </span>
+            <span className="font-medium mr-1">{calculateAverageRating()}</span>
+            <span className="text-gray-600">({reviews.length} reviews)</span>
           </div>
         </div>
 
+        {/* Review form toggle */}
         {!showReviewForm ? (
           <button
             onClick={() => setShowReviewForm(true)}
-            className="mb-6 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition"
+            className="border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium mb-6"
           >
             Write a Review
           </button>
         ) : (
-          <form onSubmit={handleReviewSubmit} className="mb-6">
+          <form
+            onSubmit={handleReviewSubmit}
+            className="mb-6 border border-gray-200 p-4 rounded-lg"
+          >
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Rating</label>
-              <div className="flex">
+              <label className="block text-gray-700 mb-2 font-medium">
+                Rating
+              </label>
+              <div className="flex space-x-1">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
                     key={star}
@@ -380,29 +429,34 @@ const Booking = () => {
                 ))}
               </div>
             </div>
+
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Comment</label>
+              <label className="block text-gray-700 mb-2 font-medium">
+                Your Review
+              </label>
               <textarea
                 value={newReview.comment}
                 onChange={(e) =>
                   setNewReview({ ...newReview, comment: e.target.value })
                 }
-                className="w-full border rounded-md p-2"
+                className="w-full border rounded-md p-3 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
                 rows="4"
+                placeholder="Share your experience with this vehicle..."
                 required
               />
             </div>
-            <div className="flex gap-2">
+
+            <div className="flex gap-3">
               <button
                 type="submit"
-                className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition"
+                className="border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium flex-1"
               >
                 Submit Review
               </button>
               <button
                 type="button"
                 onClick={() => setShowReviewForm(false)}
-                className="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition"
+                className="border border-black px-4 py-2 rounded hover:bg-gray-200 transition duration-200 font-medium flex-1"
               >
                 Cancel
               </button>
@@ -410,44 +464,50 @@ const Booking = () => {
           </form>
         )}
 
+        {/* Reviews list */}
         <div className="space-y-6">
           {reviews.length > 0 ? (
             reviews.map((review) => (
-              <div key={review._id} className="border-b pb-4">
-                <div className="flex items-center mb-2">
-                  <div className="flex mr-2">
+              <div
+                key={review._id}
+                className="border-b border-gray-200 pb-6 last:border-0"
+              >
+                <div className="flex items-start mb-2">
+                  <div className="flex items-center mr-3">
                     {[...Array(5)].map((_, i) => (
                       <span
                         key={i}
-                        className={
+                        className={`text-xl ${
                           i < review.rating
                             ? "text-yellow-400"
                             : "text-gray-300"
-                        }
+                        }`}
                       >
                         {i < review.rating ? "★" : "☆"}
                       </span>
                     ))}
                   </div>
-                  <span className="font-semibold">
-                    {review.user?.name || "Anonymous"}
-                  </span>
+                  <div>
+                    <span className="font-semibold">
+                      {review.user?.name || "Anonymous"}
+                    </span>
+                    <span className="text-gray-500 text-sm ml-2">
+                      {new Date(review.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
                 </div>
-                <p className="text-gray-700">{review.comment}</p>
-                <p className="text-sm text-gray-500 mt-2">
-                  {new Date(review.createdAt).toLocaleDateString()}
-                </p>
+                <p className="text-gray-700 pl-1">{review.comment}</p>
               </div>
             ))
           ) : (
-            <p className="text-gray-500">
-              No reviews yet. Be the first to review!
-            </p>
+            <div className="text-center py-8">
+              <p className="text-gray-500">
+                No reviews yet. Be the first to share your experience!
+              </p>
+            </div>
           )}
         </div>
       </div>
-
-      {/* review */}
     </div>
   );
 };

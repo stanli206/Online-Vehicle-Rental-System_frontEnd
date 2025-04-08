@@ -56,7 +56,7 @@ function Navbar() {
           )}
           {isUser && location.pathname === "/" && (
             <Link
-              to="/"
+              to="/Dashboard"
               className="text-white hover:text-yellow-300 font-medium"
             >
               Dashboard

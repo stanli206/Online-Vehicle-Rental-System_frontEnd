@@ -20,7 +20,7 @@ const Login = () => {
         "https://rentgaadi-backend.onrender.com/api/auth/login",
         formData
       );
-      login(response.data); // Update context state
+      login(response.data); // Update context statehttps://rentgaadi-backend.onrender.com
       if (response.data.role?.toLowerCase() === "admin") {
         navigate("/admin");
       } else {
@@ -38,7 +38,9 @@ const Login = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="bg-white shadow-lg p-6 rounded-lg w-96">
-        <h2 className="text-2xl font-bold mb-4 text-center">Log<span className="text-yellow-700">in</span></h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">
+          Log<span className="text-yellow-700">in</span>
+        </h2>
         {error && <p className="text-red-500 text-sm">{error}</p>}
         <form onSubmit={handleSubmit}>
           <input

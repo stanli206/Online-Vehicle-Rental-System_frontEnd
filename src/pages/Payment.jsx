@@ -14,9 +14,6 @@ const Payment = () => {
   const booking = location.state?.booking;
   const vehicle = booking?.vehicle;
 
-  console.log("this is booking :" + booking);
-  console.log("this is vehicle :" + vehicle);
-
   const handlePayment = async () => {
     if (!booking || !user) {
       setError("Booking information missing");

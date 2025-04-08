@@ -19,7 +19,7 @@ const Home = () => {
         );
         setVehicles(response.data.data);
 
-        //Fetch ratings for each vehicle
+        //Fetch ratings for each vehicle //https://rentgaadi-backend.onrender.com
         response.data.data.forEach((vehicle) => {
           fetchRating(vehicle._id);
         });

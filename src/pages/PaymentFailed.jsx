@@ -16,6 +16,12 @@ const PaymentFailed = () => {
       <p className="text-lg text-gray-600 mt-2">
         Something went wrong. Please try again.
       </p>
+      <button
+        onClick={() => navigate("/")}
+        className="border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium"
+      >
+        ← Back to Home
+      </button>
     </div>
   );
 };
