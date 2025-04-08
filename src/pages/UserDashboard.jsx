@@ -2,7 +2,13 @@ import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { UserCircle, Star, ArrowRight, ArrowLeft } from "lucide-react";
+import {
+  UserCircle,
+  Star,
+  ArrowRight,
+  ArrowLeft,
+  FileText,
+} from "lucide-react";
 
 const UserDashboard = () => {
   const { user } = useContext(AuthContext);
@@ -21,6 +27,8 @@ const UserDashboard = () => {
     phone: "",
     profilePicture: "",
   });
+  const [invoiceData, setInvoiceData] = useState(null);
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -105,6 +113,31 @@ const UserDashboard = () => {
     }
   };
 
+  // Fetch invoice details
+  const fetchInvoiceDetails = async (paymentId) => {
+    try {
+      const response = await axios.get(
+        `https://rentgaadi-backend.onrender.com/api/payment/userInvoice/${user._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+
+      const selectedInvoice = response.data.find(
+        (invoice) => invoice.invoiceId === paymentId
+      );
+
+      if (selectedInvoice) {
+        setInvoiceData(selectedInvoice);
+        setShowInvoiceModal(true);
+      }
+    } catch (error) {
+      console.error("Error fetching invoice details:", error);
+    }
+  };
+
   // Handle profile update
   const handleUpdate = async () => {
     setProfileLoading(true);
@@ -152,13 +185,10 @@ const UserDashboard = () => {
       {/* Main Dashboard Container */}
       <div className="max-w-7xl mx-auto">
         {/* Welcome Banner */}
-        <div className="bg-gray-400 rounded-xl p-6 mb-8 text-white shadow-lg">
+        <div className="bg-gray-800 rounded-xl p-6 mb-8 text-white shadow-lg">
           <h1 className="text-3xl font-bold">
             Welcome back, {profile?.name || "User"}!
           </h1>
-          <p className="mt-2 opacity-90">
-            Here's what's happening with your account
-          </p>
         </div>
 
         {/* Profile and Stats Section */}
@@ -179,14 +209,6 @@ const UserDashboard = () => {
                 ) : (
                   <UserCircle className="w-24 h-24 text-gray-400 mb-4" />
                 )}
-                {/* {!editMode && (
-                  <button
-                    onClick={() => setEditMode(true)}
-                    className="bg-black text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition duration-200 text-sm"
-                  >
-                    Edit Profile
-                  </button>
-                )} */}
               </div>
 
               {editMode ? (
@@ -365,12 +387,6 @@ const UserDashboard = () => {
                           ₹{vehicle.pricePerDay}/day
                         </span>
                       </div>
-                      {/* <button
-                        onClick={() => navigate(`/vehicle/${vehicle._id}`)}
-                        className="w-full mt-4 bg-black text-white py-2 rounded-lg hover:bg-yellow-700 transition duration-200"
-                      >
-                        View Details
-                      </button> */}
                     </div>
                   </div>
                 ))}
@@ -428,12 +444,14 @@ const UserDashboard = () => {
                     >
                       <div className="flex justify-between items-start">
                         <div>
-                          <p className="font-semibold">₹{item.amount}</p>
+                          <p className="font-semibold">
+                            Amount : {item.amount}
+                          </p>
                           <p className="text-sm text-gray-500">
-                            {new Date(item.createdAt).toLocaleString()}
+                            Date : {new Date(item.createdAt).toLocaleString()}
                           </p>
                         </div>
-                        <div className="text-right">
+                        <div className="text-right font-mono">
                           <span
                             className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                               item.status === "Completed"
@@ -441,11 +459,21 @@ const UserDashboard = () => {
                                 : "bg-yellow-100 text-yellow-800"
                             }`}
                           >
-                            {item.status}
+                            status : {item.status}
                           </span>
                           <p className="text-xs mt-1 text-gray-600">
-                            {item.paymentMethod} • {item.transactionId}
+                            payment Method : {item.paymentMethod}
                           </p>
+                          <p className="text-xs mt-1 text-gray-600">
+                            TransactionID : {item.transactionId}
+                          </p>
+                          <button
+                            onClick={() => fetchInvoiceDetails(item._id)}
+                            className="mt-2 flex items-center text-sm text-yellow-700 hover:text-yellow-800"
+                          >
+                            <FileText className="h-4 w-4 mr-1" />
+                            View Invoice
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -503,6 +531,109 @@ const UserDashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Invoice Modal         <div className="fixed inset-0 backdrop-blur-md bg-opacity-100 flex items-center justify-center p-4 z-50">*/}
+      {showInvoiceModal && invoiceData && (
+        <div className="fixed inset-0 backdrop-blur-md bg-opacity-100 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <h2 className="text-2xl font-bold text-gray-800">
+                  Invoice #{invoiceData.invoiceId}
+                </h2>
+                <button
+                  onClick={() => setShowInvoiceModal(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">
+                    Customer Details
+                  </h3>
+                  <p className="font-medium">{invoiceData.user.name}</p>
+                  <p>{invoiceData.user.email}</p>
+                  <p>{invoiceData.user.phone}</p>
+                </div>
+
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">
+                    Payment Details
+                  </h3>
+                  <p>
+                    <span className="font-medium">Status:</span>{" "}
+                    <span className="capitalize">
+                      {invoiceData.payment.status}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-medium">Date:</span>{" "}
+                    {new Date(invoiceData.payment.paidAt).toLocaleString()}
+                  </p>
+                  <p>
+                    <span className="font-medium">Method:</span>{" "}
+                    {invoiceData.payment.method}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <h3 className="font-semibold text-lg mb-2">Vehicle Details</h3>
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="font-medium">
+                    {invoiceData.vehicle.brand} {invoiceData.vehicle.model}
+                  </p>
+                  <p>Fuel: {invoiceData.vehicle.fuelType}</p>
+                  <p>Price per day: ₹{invoiceData.vehicle.pricePerDay}</p>
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <h3 className="font-semibold text-lg mb-2">Booking Details</h3>
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <p className="font-medium">Pickup</p>
+                      <p>
+                        {new Date(
+                          invoiceData.booking.startDate
+                        ).toLocaleDateString()}{" "}
+                        at {invoiceData.booking.startTime}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="font-medium">Dropoff</p>
+                      <p>
+                        {new Date(
+                          invoiceData.booking.endDate
+                        ).toLocaleDateString()}{" "}
+                        at {invoiceData.booking.endTime}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="mt-2">
+                    <span className="font-medium">Total Days:</span>{" "}
+                    {invoiceData.booking.totalDays}
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-yellow-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-lg mb-2">Payment Summary</h3>
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">Total Amount:</span>
+                  <span className="text-xl font-bold">
+                    ₹{invoiceData.booking.totalPrice}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

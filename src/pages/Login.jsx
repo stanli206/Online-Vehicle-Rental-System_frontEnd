@@ -20,7 +20,7 @@ const Login = () => {
         "https://rentgaadi-backend.onrender.com/api/auth/login",
         formData
       );
-      login(response.data); // Update context statehttps://rentgaadi-backend.onrender.com
+      login(response.data); // Update context state
       if (response.data.role?.toLowerCase() === "admin") {
         navigate("/admin");
       } else {

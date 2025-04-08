@@ -78,10 +78,13 @@ function Navbar() {
             <div className="relative inline-block text-left">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-2 font-medium hover:text-yellow-300"
+                className="flex items-center gap-2 font-medium hover:text-yellow-300 focus:outline-none"
               >
                 Welcome, {user.name}
-                <ChevronDown size={18} />
+                <ChevronDown 
+                  size={18} 
+                  className={`transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`}
+                />
               </button>
 
               {/* Dropdown */}

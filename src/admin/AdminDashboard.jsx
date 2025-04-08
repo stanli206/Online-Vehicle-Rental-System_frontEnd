@@ -31,12 +31,9 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     axios
-      .get(
-        "https://rentgaadi-backend.onrender.com/api/vehicle/getAllVehicles",
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      )
+      .get("https://rentgaadi-backend.onrender.com/api/vehicle/getAllVehicles", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
       .then((res) => {
         setVehicles(res.data.data || []);
         setLoading(false);
@@ -60,12 +57,9 @@ const AdminDashboard = () => {
       });
 
     axios
-      .get(
-        "https://rentgaadi-backend.onrender.com/api/user/users&bookings&payments",
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      )
+      .get("https://rentgaadi-backend.onrender.com/api/user/users&bookings&payments", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
       .then((res) => {
         setCompletedPayments(res.data.data || []);
         setPaymentsLoading(false);
@@ -93,16 +87,12 @@ const AdminDashboard = () => {
     }
 
     axios
-      .post(
-        "https://rentgaadi-backend.onrender.com/api/vehicle/create",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
+      .post("https://rentgaadi-backend.onrender.com/api/vehicle/create", formData, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((res) => {
         setVehicles([...vehicles, res.data.vehicle]);
         setNewVehicle({
@@ -163,16 +153,12 @@ const AdminDashboard = () => {
     }
 
     axios
-      .put(
-        `https://rentgaadi-backend.onrender.com/api/vehicle/update/${editId}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
+      .put(`https://rentgaadi-backend.onrender.com/api/vehicle/update/${editId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((res) => {
         const updatedVehicles = vehicles.map((v) =>
           v._id === editId ? res.data.data : v
@@ -200,12 +186,9 @@ const AdminDashboard = () => {
   const handleDeleteVehicle = (id) => {
     if (confirm("Are you sure you want to delete this vehicle?")) {
       axios
-        .delete(
-          `https://rentgaadi-backend.onrender.com/api/vehicle/delete/${id}`,
-          {
-            headers: { Authorization: `Bearer ${user.token}` },
-          }
-        )
+        .delete(`https://rentgaadi-backend.onrender.com/api/vehicle/delete/${id}`, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        })
         .then(() => {
           const filteredVehicles = vehicles.filter((v) => v._id !== id);
           setVehicles(filteredVehicles);
@@ -767,12 +750,12 @@ const AdminDashboard = () => {
                         >
                           Status
                         </th>
-                        <th
+                        {/* <th
                           scope="col"
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
                           Actions
-                        </th>
+                        </th> */}
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -821,14 +804,14 @@ const AdminDashboard = () => {
                               Active
                             </span>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          {/* <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <button className="text-blue-600 hover:text-blue-900 mr-3">
                               Edit
                             </button>
                             <button className="text-red-600 hover:text-red-900">
                               Delete
                             </button>
-                          </td>
+                          </td> */}
                         </tr>
                       ))}
                     </tbody>
@@ -845,11 +828,11 @@ const AdminDashboard = () => {
                 <h2 className="text-2xl font-semibold text-gray-800">
                   Payment Records
                 </h2>
-                <div className="flex items-center space-x-2">
+                {/* <div className="flex items-center space-x-2">
                   <button className="px-3 py-1 bg-blue-50 text-blue-600 rounded-md text-sm font-medium">
                     Export
                   </button>
-                </div>
+                </div> */}
               </div>
 
               {paymentsLoading ? (

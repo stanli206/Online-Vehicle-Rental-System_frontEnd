@@ -18,11 +18,14 @@ const PaymentSuccess = () => {
 
   const updatePaymentStatus = async () => {
     try {
-      await axios.post("https://rentgaadi-backend.onrender.com/api/payment/success", {
-        sessionId,
-        bookingId,
-        userId,
-      });
+      await axios.post(
+        "https://rentgaadi-backend.onrender.com/api/payment/success",
+        {
+          sessionId,
+          bookingId,
+          userId,
+        }
+      );
       // console.log("Payment and Booking updated successfully!");
     } catch (error) {
       console.error("Error updating payment:", error);

@@ -157,12 +157,6 @@ const Home = () => {
                       ₹{vehicle.pricePerDay}/day
                     </p>
 
-                    {/* <p className="text-gray-600">
-                      {vehicle.seats} seater | {vehicle.transmission} |{" "}
-                      {vehicle.fuelType}
-                    </p> */}
-                    {/* <p className="text-gray-600 mt-2">{vehicle.description}</p> */}
-
                     {vehicle.availability ? (
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                         Available
@@ -199,14 +193,16 @@ const Home = () => {
                       </span>
                     </div>
 
-                    <div className="flex justify-center">
-                      <button
-                        onClick={() => handleRentNow(vehicle)}
-                        className="mt-4 border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium"
-                      >
-                        Rent Now
-                      </button>
-                    </div>
+                    {vehicle.availability && (
+                      <div className="flex justify-center">
+                        <button
+                          onClick={() => handleRentNow(vehicle)}
+                          className="mt-4 border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium"
+                        >
+                          Rent Now
+                        </button>
+                      </div>
+                    )}
                   </div>
                 );
               })
