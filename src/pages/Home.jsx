@@ -19,7 +19,7 @@ const Home = () => {
         );
         setVehicles(response.data.data);
 
-        //Fetch ratings for each vehicle //https://rentgaadi-backend.onrender.com
+        //Fetch ratings for each vehicle //http://localhost:5000
         response.data.data.forEach((vehicle) => {
           fetchRating(vehicle._id);
         });
@@ -144,11 +144,22 @@ const Home = () => {
                     <p className="text-lg font-bold text-gray-800">
                       ₹{vehicle.pricePerDay}/day
                     </p>
+
                     {/* <p className="text-gray-600">
                       {vehicle.seats} seater | {vehicle.transmission} |{" "}
                       {vehicle.fuelType}
                     </p> */}
                     {/* <p className="text-gray-600 mt-2">{vehicle.description}</p> */}
+
+                    {vehicle.availability ? (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        Available
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                        Currently not available
+                      </span>
+                    )}
 
                     {/* ⭐ Rating Section */}
                     <div className="flex items-end mt-2">
