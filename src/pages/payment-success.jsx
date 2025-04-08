@@ -35,7 +35,7 @@ const PaymentSuccess = () => {
       <p>Booking Confirmed ✅</p>
       <br />
       <button
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/Dashboard")}
         className="border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium"
       >
         ← Back to Home
