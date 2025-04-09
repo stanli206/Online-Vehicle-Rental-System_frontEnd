@@ -47,7 +47,7 @@ const Payment = () => {
   // Error state - if no booking data
   if (!booking || !vehicle) {
     return (
-      <div className="container mx-auto p-6 text-center">
+      <div className="container mx-auto p-6 text-center mt-20">
         <div className="bg-white shadow-md rounded-lg p-8 max-w-md mx-auto">
           <h2 className="text-2xl font-bold mb-4">Booking Not Found</h2>
           <p className="mb-6">Please start your booking process again.</p>
@@ -92,7 +92,7 @@ const Payment = () => {
               : "hover:bg-yellow-600"
           }`}
         >
-          {isProcessing ? "Processing..." : "Pay now with card"}
+          {isProcessing ? "Processing..." : "Pay with card"}
         </button>
 
         {error && (

@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaIndianRupeeSign } from "react-icons/fa6";
+
 
 const Home = () => {
   const [vehicles, setVehicles] = useState([]);
@@ -111,7 +113,7 @@ const Home = () => {
       {/* Vehicle Listings */}
       <section className="container mx-auto p-6">
         <h2 className="text-4xl font-bold text-center mb-8">
-          Featured Vehicles
+          Featured <span className="text-yellow-700">Vehicles</span>
         </h2>
 
         {loading ? (
@@ -153,9 +155,16 @@ const Home = () => {
                       </svg>
                       {vehicle.location}
                     </div>
-                    <p className="text-lg font-bold text-gray-800">
-                      ₹{vehicle.pricePerDay}/day
+                    <p className="flex items-center text-lg font-bold text-gray-800 space-x-1">
+                      <span className="flex items-center">
+                        <FaIndianRupeeSign className="text-base mt-[1px]" />
+                        {vehicle.pricePerDay}
+                      </span>
+                      <span className="text-sm font-normal ml-1">per day</span>
                     </p>
+                    {/* <p className="text-lg font-bold text-gray-800">
+                      ₹{vehicle.pricePerDay}/day
+                    </p> */}
 
                     {vehicle.availability ? (
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">

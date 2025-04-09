@@ -73,7 +73,7 @@ const UserProfile = () => {
     );
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 bg-white shadow-lg rounded-xl p-8">
+    <div className="max-w-2xl mx-auto mt-10 bg-white shadow-lg rounded-xl p-8 pt-25">
       {/* Back to Home */}
       <div className="mb-6">
         <button

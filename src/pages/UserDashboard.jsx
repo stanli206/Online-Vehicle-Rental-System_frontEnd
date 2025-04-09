@@ -9,6 +9,8 @@ import {
   ArrowLeft,
   FileText,
 } from "lucide-react";
+import { FaIndianRupeeSign } from "react-icons/fa6";
+
 
 const UserDashboard = () => {
   const { user } = useContext(AuthContext);
@@ -187,7 +189,8 @@ const UserDashboard = () => {
         {/* Welcome Banner */}
         <div className="bg-gray-800 rounded-xl p-6 mb-8 text-white shadow-lg">
           <h1 className="text-3xl font-bold">
-            Welcome back, {profile?.name || "User"}!
+            Welcome back,{" "}
+            <span className="text-yellow-500">{profile?.name || "User"}!</span>
           </h1>
         </div>
 
@@ -383,9 +386,18 @@ const UserDashboard = () => {
                     <div className="p-4">
                       <div className="flex justify-between items-center mb-2">
                         <span className="text-gray-600">{vehicle.year}</span>
-                        <span className="text-lg font-bold text-yellow-700">
+                        <p className="flex items-center text-lg font-bold text-yellow-700 space-x-1">
+                          <span className="flex items-center">
+                            <FaIndianRupeeSign className="text-base mt-[1px]" />
+                            {vehicle.pricePerDay}
+                          </span>
+                          <span className="text-sm font-normal ml-1">
+                            per day
+                          </span>
+                        </p>
+                        {/* <span className="text-lg font-bold text-yellow-700">
                           ₹{vehicle.pricePerDay}/day
-                        </span>
+                        </span> */}
                       </div>
                     </div>
                   </div>
@@ -535,15 +547,15 @@ const UserDashboard = () => {
       {/* Invoice Modal         <div className="fixed inset-0 backdrop-blur-md bg-opacity-100 flex items-center justify-center p-4 z-50">*/}
       {showInvoiceModal && invoiceData && (
         <div className="fixed inset-0 backdrop-blur-md bg-opacity-100 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-gray-400 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
-                <h2 className="text-2xl font-bold text-gray-800">
+                <h2 className="text-2xl font-bold text-black">
                   Invoice #{invoiceData.invoiceId}
                 </h2>
                 <button
                   onClick={() => setShowInvoiceModal(false)}
-                  className="text-gray-500 hover:text-gray-700"
+                  className="text-black hover:text-gray-700"
                 >
                   ✕
                 </button>

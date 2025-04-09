@@ -71,6 +71,43 @@ const AdminDashboard = () => {
   }, [user, navigate]);
 
   const handleAddVehicle = () => {
+    ///validation start
+    const requiredFields = [
+      { key: "make", label: "Make" },
+      { key: "model", label: "Model" },
+      { key: "year", label: "Year" },
+      { key: "pricePerDay", label: "Price Per Day" },
+      { key: "location", label: "Location" },
+      { key: "description", label: "Description" },
+      { key: "seats", label: "Seats" },
+      { key: "fuelType", label: "Fuel Type" },
+      { key: "transmission", label: "Transmission" },
+    ];
+
+    let missingFields = [];
+
+    for (let field of requiredFields) {
+      if (
+        !newVehicle[field.key] ||
+        newVehicle[field.key].toString().trim() === ""
+      ) {
+        missingFields.push(field.label);
+      }
+    }
+
+    if (!newVehicle.images) {
+      missingFields.push("Vehicle Image");
+    }
+
+    if (missingFields.length > 0) {
+      alert(
+        `${missingFields.join(", ")} ${
+          missingFields.length > 1 ? "are" : "is"
+        } required`
+      );
+      return;
+    }
+    ///validation end
     const formData = new FormData();
     formData.append("make", newVehicle.make);
     formData.append("model", newVehicle.model);
@@ -199,7 +236,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-6 mt-15">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-6 mt-20">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">

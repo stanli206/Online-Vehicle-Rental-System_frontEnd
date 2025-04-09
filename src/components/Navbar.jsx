@@ -80,7 +80,7 @@ function Navbar() {
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="flex items-center gap-2 font-medium hover:text-yellow-300 focus:outline-none"
               >
-                Welcome, {user.name}
+                Hello, {user.name}
                 <ChevronDown 
                   size={18} 
                   className={`transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`}

@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from "../context/AuthContext";
 import moment from "moment";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 const Booking = () => {
   const { user } = useContext(AuthContext);
@@ -178,18 +179,19 @@ const Booking = () => {
   return (
     <div className="container mx-auto p-4 md:p-6 bg-gray-50 min-h-screen">
       {/* Back button */}
-      <button
-        onClick={() => navigate(-1)}
-        className="border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium mb-6"
-      >
-        ← Back
-      </button>
+      <div className="flex justify-between mt-20">
+        <button
+          onClick={() => navigate(-1)}
+          className="border border-black px-4 py-2 rounded hover:bg-yellow-600 transition duration-200 font-medium mb-6 "
+        >
+          ← Back
+        </button>
 
-      {/* Main heading */}
-      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
-        Book Your <span className="text-yellow-700">Ride</span>
-      </h2>
-
+        {/* Main heading */}
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          Book Your <span className="text-yellow-700">Ride</span>
+        </h2>
+      </div>
       {/* Vehicle and booking form section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Vehicle details card */}
@@ -207,10 +209,14 @@ const Booking = () => {
           </h3>
 
           <div className="space-y-2 mb-4">
-            <p className="text-lg font-bold text-gray-800">
-              ₹{vehicle.pricePerDay}{" "}
-              <span className="text-sm font-normal">per day</span>
+            <p className="flex items-center text-lg font-bold text-gray-800 space-x-1">
+              <span className="flex items-center">
+                <FaIndianRupeeSign className="text-base mt-[1px]" />
+                {vehicle.pricePerDay}
+              </span>
+              <span className="text-sm font-normal ml-1">per day</span>
             </p>
+
             <p className="text-gray-700">{vehicle.year} Model</p>
             <p className="text-gray-700">{vehicle.seats} seater</p>
             <p className="text-gray-700">
@@ -238,12 +244,20 @@ const Booking = () => {
                   <DatePicker
                     selected={formData.startDate}
                     onChange={(date) => handleDateChange(date, "startDate")}
-                    className="border px-4 py-2 rounded-md w-full"
+                    className="border px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-yellow-600"
                     placeholderText="Select start date"
                     dateFormat="dd/MM/yyyy"
                     minDate={new Date()}
                     required
                     excludeDates={bookedDates}
+                    onKeyDown={(e) => e.preventDefault()}
+                    dayClassName={(date) =>
+                      bookedDates.some(
+                        (d) => d.toDateString() === date.toDateString()
+                      )
+                        ? "bg-red-500 text-white rounded-full"
+                        : undefined
+                    }
                   />
                 </div>
 
@@ -257,9 +271,10 @@ const Booking = () => {
                     timeIntervals={30}
                     timeCaption="Time"
                     dateFormat="h:mm aa"
-                    className="border px-4 py-2 rounded-md w-full"
+                    className="border px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-yellow-600"
                     placeholderText="Select start time"
                     required
+                    onKeyDown={(e) => e.preventDefault()}
                   />
                 </div>
 
@@ -268,12 +283,20 @@ const Booking = () => {
                   <DatePicker
                     selected={formData.endDate}
                     onChange={(date) => handleDateChange(date, "endDate")}
-                    className="border px-4 py-2 rounded-md w-full"
+                    className="border px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-yellow-600"
                     placeholderText="Select end date"
                     dateFormat="dd/MM/yyyy"
                     minDate={formData.startDate}
                     required
                     excludeDates={bookedDates}
+                    onKeyDown={(e) => e.preventDefault()}
+                    dayClassName={(date) =>
+                      bookedDates.some(
+                        (d) => d.toDateString() === date.toDateString()
+                      )
+                        ? "bg-red-500 text-white rounded-full"
+                        : undefined
+                    }
                   />
                 </div>
 
@@ -287,12 +310,79 @@ const Booking = () => {
                     timeIntervals={30}
                     timeCaption="Time"
                     dateFormat="h:mm aa"
-                    className="border px-4 py-2 rounded-md w-full"
+                    className="border px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-yellow-600"
                     placeholderText="Select end time"
                     required
+                    onKeyDown={(e) => e.preventDefault()}
                   />
                 </div>
               </div>
+
+              {/* <div className="space-y-4">
+                <div>
+                  <label className="block text-gray-700 mb-1">Start Date</label>
+                  <DatePicker
+                    selected={formData.startDate}
+                    onChange={(date) => handleDateChange(date, "startDate")}
+                    className="border px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-yellow-600"
+                    placeholderText="Select start date"
+                    dateFormat="dd/MM/yyyy"
+                    minDate={new Date()}
+                    required
+                    excludeDates={bookedDates}
+                    onKeyDown={(e) => e.preventDefault()}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 mb-1">Start Time</label>
+                  <DatePicker
+                    selected={formData.startTime}
+                    onChange={(date) => handleDateChange(date, "startTime")}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={30}
+                    timeCaption="Time"
+                    dateFormat="h:mm aa"
+                    className="border px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-yellow-600"
+                    placeholderText="Select start time"
+                    required
+                    onKeyDown={(e) => e.preventDefault()}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 mb-1">End Date</label>
+                  <DatePicker
+                    selected={formData.endDate}
+                    onChange={(date) => handleDateChange(date, "endDate")}
+                    className="border px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-yellow-600"
+                    placeholderText="Select end date"
+                    dateFormat="dd/MM/yyyy"
+                    minDate={formData.startDate}
+                    required
+                    excludeDates={bookedDates}
+                    onKeyDown={(e) => e.preventDefault()}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 mb-1">End Time</label>
+                  <DatePicker
+                    selected={formData.endTime}
+                    onChange={(date) => handleDateChange(date, "endTime")}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={30}
+                    timeCaption="Time"
+                    dateFormat="h:mm aa"
+                    className="border px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-yellow-600"
+                    placeholderText="Select end time"
+                    required
+                    onKeyDown={(e) => e.preventDefault()}
+                  />
+                </div>
+              </div> */}
 
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <button
