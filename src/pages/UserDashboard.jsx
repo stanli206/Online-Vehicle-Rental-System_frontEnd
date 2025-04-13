@@ -652,9 +652,12 @@ const UserDashboard = () => {
               <p className="mt-2">
                 Payment Method: {invoiceData.paymentMethod}
               </p>
-              <p className="mt-2">
-                Transaction ID: {invoiceData.transactionId}
-              </p>
+              <div className="flex">
+                <p className="mt-2">
+                  Transaction ID: {invoiceData.transactionId}
+                </p>
+              </div>
+
               <p className="mt-2">Payment Status: {invoiceData.status}</p>
               <p className="mt-2">
                 Date: {new Date(invoiceData.createdAt).toLocaleString()}
