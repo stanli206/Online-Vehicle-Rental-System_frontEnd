@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 const Payment = () => {
   const { user } = useContext(AuthContext);
@@ -80,7 +81,17 @@ const Payment = () => {
           <p>End : {booking.end}</p>
           <p>total Days : {booking.totalDays}</p>
 
-          <p>Total: ₹{booking.totalPrice}</p>
+          <p className="flex items-center text-lg font-bold text-gray-800 space-x-1">
+            Total:
+            <span className="flex items-center">
+              <FaIndianRupeeSign className="text-base mt-[1px]" />
+              {booking.totalPrice}
+            </span>
+          </p>
+          {/* <p>
+             <FaIndianRupeeSign className="text-base mt-[1px]" />
+            {booking.totalPrice}
+          </p> */}
         </div>
 
         <button

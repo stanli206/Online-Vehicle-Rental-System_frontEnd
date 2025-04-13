@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 
-
 const Home = () => {
   const [vehicles, setVehicles] = useState([]);
   const [ratings, setRatings] = useState({});
@@ -55,9 +54,9 @@ const Home = () => {
     navigate("/booking", { state: { vehicle } });
   };
 
-  // 🔍 Search Logic
+  // Search Logic
   const filteredVehicles = vehicles.filter((vehicle) =>
-    `${vehicle.make} ${vehicle.model} ${vehicle.location}`
+    `${vehicle.make} ${vehicle.model} ${vehicle.location}${vehicle.pricePerDay}`
       .toLowerCase()
       .includes(searchQuery.toLowerCase())
   );

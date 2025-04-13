@@ -274,7 +274,7 @@ const Booking = () => {
                     className="border px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-yellow-600"
                     placeholderText="Select start time"
                     required
-                    onKeyDown={(e) => e.preventDefault()}
+                    // onKeyDown={(e) => e.preventDefault()}
                   />
                 </div>
 
@@ -425,10 +425,14 @@ const Booking = () => {
                   <span className="font-medium">Total Days:</span>{" "}
                   {bookingDetails.totalDays}
                 </p>
-                <p>
-                  <span className="font-medium">Total Price:</span> ₹
-                  {bookingDetails.totalPrice}
+                <p className="flex items-center text-lg font-bold text-gray-800 space-x-1">
+                  <span className="flex items-center">
+                    <FaIndianRupeeSign className="text-base mt-[1px]" />
+                    {bookingDetails.totalPrice}
+                  </span>
+                  <span className="text-sm font-normal ml-1">per day</span>
                 </p>
+                
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 pt-4">

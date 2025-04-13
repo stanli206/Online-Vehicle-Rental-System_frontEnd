@@ -24,7 +24,7 @@ function App() {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    console.log("User data from AuthContext:", user);
+    // console.log("User data from AuthContext:", user);
   }, [user]);
 
   return (

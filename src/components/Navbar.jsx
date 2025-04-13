@@ -30,7 +30,7 @@ function Navbar() {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-yellow-700 to-yellow-700 text-white bg-gray shadow-md rounded">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-yellow-600 to-yellow-700 text-white bg-gray shadow-md rounded">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo & Left Links */}
         <div className="flex items-center gap-6">

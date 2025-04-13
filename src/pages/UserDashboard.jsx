@@ -10,7 +10,7 @@ import {
   FileText,
 } from "lucide-react";
 import { FaIndianRupeeSign } from "react-icons/fa6";
-
+import { jsPDF } from "jspdf";
 
 const UserDashboard = () => {
   const { user } = useContext(AuthContext);
@@ -54,6 +54,8 @@ const UserDashboard = () => {
           },
         }
       );
+      console.log("✅ Full API Response: ", response); // 👈 Entire Axios response
+      console.log("✅ Response Data Only: ", response.data);
       setPayments(response.data.data);
     } catch (error) {
       console.error("Error fetching user payments", error);
@@ -119,16 +121,15 @@ const UserDashboard = () => {
   const fetchInvoiceDetails = async (paymentId) => {
     try {
       const response = await axios.get(
-        `https://rentgaadi-backend.onrender.com/api/payment/userInvoice/${user._id}`,
+        `https://rentgaadi-backend.onrender.com/api/user/users&bookings&payments/${user._id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
         }
       );
-
-      const selectedInvoice = response.data.find(
-        (invoice) => invoice.invoiceId === paymentId
+      const selectedInvoice = response.data.data.find(
+        (invoice) => invoice._id === paymentId
       );
 
       if (selectedInvoice) {
@@ -181,7 +182,62 @@ const UserDashboard = () => {
     currentVehicleIndex * 3,
     currentVehicleIndex * 3 + 3
   );
+  //download invoice
+  const downloadInvoice = () => {
+    const doc = new jsPDF();
 
+    // Add Title
+    doc.setFontSize(18);
+    doc.text("Invoice Details", 14, 20);
+
+    // User Information
+    doc.setFontSize(12);
+    doc.text(`User Name: ${invoiceData.user.name}`, 14, 30);
+    doc.text(`Email: ${invoiceData.user.email}`, 14, 40);
+    doc.text(`Phone: ${invoiceData.user.phone}`, 14, 50);
+
+    // Booking Information
+    doc.text(`Booking ID: ${invoiceData.booking._id}`, 14, 60);
+    doc.text(`Status: ${invoiceData.booking.status}`, 14, 70);
+    doc.text(
+      `Start Date: ${new Date(
+        invoiceData.booking.startDate
+      ).toLocaleDateString()}`,
+      14,
+      80
+    );
+    doc.text(
+      `End Date: ${new Date(invoiceData.booking.endDate).toLocaleDateString()}`,
+      14,
+      90
+    );
+    // Vehicle Information
+    doc.text(
+      `Vehicle: ${invoiceData.booking.vehicle.make} ${invoiceData.booking.vehicle.model}`,
+      14,
+      120
+    );
+    doc.text(`Year: ${invoiceData.booking.vehicle.year}`, 14, 130);
+    doc.text(
+      `Rent Per Hour: ${invoiceData.booking.vehicle.pricePerDay}`,
+      14,
+      140
+    );
+    // Payment Information
+    doc.text(`Amount: ${invoiceData.amount}`, 14, 150);
+    doc.text(`Payment Method: ${invoiceData.paymentMethod}`, 14, 160);
+    doc.text(`Transaction ID: ${invoiceData.transactionId}`, 14, 170);
+    doc.text(`Payment Status: ${invoiceData.status}`, 14, 180);
+    doc.text(
+      `Date: ${new Date(invoiceData.createdAt).toLocaleString()}`,
+      14,
+      190
+    );
+
+    // Save the document
+    doc.save("invoice.pdf");
+  };
+  ///download invoice
   return (
     <div className="min-h-screen bg-gray-50 p-6 pt-25">
       {/* Main Dashboard Container */}
@@ -544,105 +600,78 @@ const UserDashboard = () => {
         </div>
       </div>
 
-      {/* Invoice Modal         <div className="fixed inset-0 backdrop-blur-md bg-opacity-100 flex items-center justify-center p-4 z-50">*/}
-      {showInvoiceModal && invoiceData && (
-        <div className="fixed inset-0 backdrop-blur-md bg-opacity-100 flex items-center justify-center p-4 z-50">
-          <div className="bg-gray-400 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-start mb-4">
-                <h2 className="text-2xl font-bold text-black">
-                  Invoice #{invoiceData.invoiceId}
-                </h2>
-                <button
-                  onClick={() => setShowInvoiceModal(false)}
-                  className="text-black hover:text-gray-700"
-                >
-                  ✕
-                </button>
-              </div>
+      {showInvoiceModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg w-96">
+            <h2 className="text-2xl font-semibold text-gray-800">
+              Invoice Details
+            </h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2">
-                    Customer Details
-                  </h3>
-                  <p className="font-medium">{invoiceData.user.name}</p>
-                  <p>{invoiceData.user.email}</p>
-                  <p>{invoiceData.user.phone}</p>
-                </div>
-
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-lg mb-2">
-                    Payment Details
-                  </h3>
-                  <p>
-                    <span className="font-medium">Status:</span>{" "}
-                    <span className="capitalize">
-                      {invoiceData.payment.status}
-                    </span>
-                  </p>
-                  <p>
-                    <span className="font-medium">Date:</span>{" "}
-                    {new Date(invoiceData.payment.paidAt).toLocaleString()}
-                  </p>
-                  <p>
-                    <span className="font-medium">Method:</span>{" "}
-                    {invoiceData.payment.method}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <h3 className="font-semibold text-lg mb-2">Vehicle Details</h3>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="font-medium">
-                    {invoiceData.vehicle.brand} {invoiceData.vehicle.model}
-                  </p>
-                  <p>Fuel: {invoiceData.vehicle.fuelType}</p>
-                  <p>Price per day: ₹{invoiceData.vehicle.pricePerDay}</p>
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <h3 className="font-semibold text-lg mb-2">Booking Details</h3>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="font-medium">Pickup</p>
-                      <p>
-                        {new Date(
-                          invoiceData.booking.startDate
-                        ).toLocaleDateString()}{" "}
-                        at {invoiceData.booking.startTime}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="font-medium">Dropoff</p>
-                      <p>
-                        {new Date(
-                          invoiceData.booking.endDate
-                        ).toLocaleDateString()}{" "}
-                        at {invoiceData.booking.endTime}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="mt-2">
-                    <span className="font-medium">Total Days:</span>{" "}
-                    {invoiceData.booking.totalDays}
-                  </p>
-                </div>
-              </div>
-
-              <div className="bg-yellow-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-lg mb-2">Payment Summary</h3>
-                <div className="flex justify-between items-center">
-                  <span className="font-medium">Total Amount:</span>
-                  <span className="text-xl font-bold">
-                    ₹{invoiceData.booking.totalPrice}
-                  </span>
-                </div>
-              </div>
+            {/* User Information */}
+            <div className="mt-4">
+              <p className="font-semibold">
+                User Name: {invoiceData.user.name}
+              </p>
+              <p className="mt-2">Email: {invoiceData.user.email}</p>
+              <p className="mt-2">Phone: {invoiceData.user.phone}</p>
             </div>
+            {/* Vehicle Information */}
+            <div className="mt-4">
+              <p className="font-semibold">
+                Vehicle: {invoiceData.booking.vehicle.make}{" "}
+                {invoiceData.booking.vehicle.model}
+              </p>
+              <p className="mt-2">Year: {invoiceData.booking.vehicle.year}</p>
+              <p className="mt-2">
+                Rent Per Day: {invoiceData.booking.vehicle.pricePerDay}
+              </p>
+            </div>
+            {/* Booking Information */}
+            <div className="mt-4">
+              <p className="font-semibold">
+                Booking ID: {invoiceData.booking._id}
+              </p>
+              <p className="mt-2">Status: {invoiceData.booking.status}</p>
+              <p className="mt-2">
+                Start Date:{" "}
+                {new Date(invoiceData.booking.startDate).toLocaleDateString()}
+              </p>
+              <p className="mt-2">
+                End Date:{" "}
+                {new Date(invoiceData.booking.endDate).toLocaleDateString()}
+              </p>
+            </div>
+
+            {/* Payment Information */}
+            <div className="mt-4">
+              <p className="font-semibold">
+                Amount: <FaIndianRupeeSign className="inline" />{" "}
+                {invoiceData.amount}
+              </p>
+              <p className="mt-2">
+                Payment Method: {invoiceData.paymentMethod}
+              </p>
+              <p className="mt-2">
+                Transaction ID: {invoiceData.transactionId}
+              </p>
+              <p className="mt-2">Payment Status: {invoiceData.status}</p>
+              <p className="mt-2">
+                Date: {new Date(invoiceData.createdAt).toLocaleString()}
+              </p>
+            </div>
+
+            <button
+              onClick={downloadInvoice}
+              className="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-200"
+            >
+              Download Invoice
+            </button>
+            <button
+              onClick={() => setShowInvoiceModal(false)}
+              className="mt-4 bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition duration-200"
+            >
+              Close
+            </button>
           </div>
         </div>
       )}

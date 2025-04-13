@@ -9,8 +9,6 @@ const Register = () => {
     email: "",
     password: "",
     phone: "",
-    // role: "user", //
-    // profilePicture: null,
   });
   const [error, setError] = useState("");
 
