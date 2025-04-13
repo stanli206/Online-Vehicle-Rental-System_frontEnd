@@ -318,72 +318,6 @@ const Booking = () => {
                 </div>
               </div>
 
-              {/* <div className="space-y-4">
-                <div>
-                  <label className="block text-gray-700 mb-1">Start Date</label>
-                  <DatePicker
-                    selected={formData.startDate}
-                    onChange={(date) => handleDateChange(date, "startDate")}
-                    className="border px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-yellow-600"
-                    placeholderText="Select start date"
-                    dateFormat="dd/MM/yyyy"
-                    minDate={new Date()}
-                    required
-                    excludeDates={bookedDates}
-                    onKeyDown={(e) => e.preventDefault()}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-gray-700 mb-1">Start Time</label>
-                  <DatePicker
-                    selected={formData.startTime}
-                    onChange={(date) => handleDateChange(date, "startTime")}
-                    showTimeSelect
-                    showTimeSelectOnly
-                    timeIntervals={30}
-                    timeCaption="Time"
-                    dateFormat="h:mm aa"
-                    className="border px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-yellow-600"
-                    placeholderText="Select start time"
-                    required
-                    onKeyDown={(e) => e.preventDefault()}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-gray-700 mb-1">End Date</label>
-                  <DatePicker
-                    selected={formData.endDate}
-                    onChange={(date) => handleDateChange(date, "endDate")}
-                    className="border px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-yellow-600"
-                    placeholderText="Select end date"
-                    dateFormat="dd/MM/yyyy"
-                    minDate={formData.startDate}
-                    required
-                    excludeDates={bookedDates}
-                    onKeyDown={(e) => e.preventDefault()}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-gray-700 mb-1">End Time</label>
-                  <DatePicker
-                    selected={formData.endTime}
-                    onChange={(date) => handleDateChange(date, "endTime")}
-                    showTimeSelect
-                    showTimeSelectOnly
-                    timeIntervals={30}
-                    timeCaption="Time"
-                    dateFormat="h:mm aa"
-                    className="border px-4 py-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-yellow-600"
-                    placeholderText="Select end time"
-                    required
-                    onKeyDown={(e) => e.preventDefault()}
-                  />
-                </div>
-              </div> */}
-
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <button
                   type="submit"
@@ -426,13 +360,12 @@ const Booking = () => {
                   {bookingDetails.totalDays}
                 </p>
                 <p className="flex items-center text-lg font-bold text-gray-800 space-x-1">
+                  Total :
                   <span className="flex items-center">
                     <FaIndianRupeeSign className="text-base mt-[1px]" />
                     {bookingDetails.totalPrice}
                   </span>
-                  <span className="text-sm font-normal ml-1">per day</span>
                 </p>
-                
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 pt-4">
