@@ -644,7 +644,7 @@ const UserDashboard = () => {
             </div>
 
             {/* Payment Information */}
-            <div className="mt-4">
+            <div className="mt-4 flex-col">
               <p className="font-semibold">
                 Amount: <FaIndianRupeeSign className="inline" />{" "}
                 {invoiceData.amount}
@@ -652,12 +652,9 @@ const UserDashboard = () => {
               <p className="mt-2">
                 Payment Method: {invoiceData.paymentMethod}
               </p>
-              <div className="flex">
-                <p className="mt-2">
-                  Transaction ID: {invoiceData.transactionId}
-                </p>
-              </div>
-
+              <p className="mt-2">
+                Transaction ID: {invoiceData.transactionId}
+              </p>
               <p className="mt-2">Payment Status: {invoiceData.status}</p>
               <p className="mt-2">
                 Date: {new Date(invoiceData.createdAt).toLocaleString()}
