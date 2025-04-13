@@ -601,7 +601,7 @@ const UserDashboard = () => {
       </div>
 
       {showInvoiceModal && (
-        <div className="fixed inset-0 backdrop-blur-md bg-opacity-100 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center z-50">
           {/* fixed inset-0 backdrop-blur-md bg-opacity-100 flex items-center justify-center p-4 z-50 */}
           <div className="bg-white p-6 rounded-lg w-96">
             <h2 className="text-2xl font-semibold text-gray-800">
@@ -644,7 +644,7 @@ const UserDashboard = () => {
             </div>
 
             {/* Payment Information */}
-            <div className="mt-4 flex-col">
+            <div className="mt-4">
               <p className="font-semibold">
                 Amount: <FaIndianRupeeSign className="inline" />{" "}
                 {invoiceData.amount}
@@ -652,7 +652,7 @@ const UserDashboard = () => {
               <p className="mt-2">
                 Payment Method: {invoiceData.paymentMethod}
               </p>
-              <p className="mt-2">
+              <p className="mt-2 break-words w-full">
                 Transaction ID: {invoiceData.transactionId}
               </p>
               <p className="mt-2">Payment Status: {invoiceData.status}</p>
