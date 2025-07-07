@@ -46,6 +46,8 @@ A full-featured **MERN Stack** application that allows users to browse, book, an
 
 ---
 ### 📁 Folder Structure
+
+```bash
 online-vehicle-rental-system/
 │
 ├── backend/
@@ -64,6 +66,7 @@ online-vehicle-rental-system/
 │   └── main.jsx           # Frontend entry point
 │
 └── README.md
+```
 
 
 ## ⚙️ Installation Guide
