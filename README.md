@@ -72,16 +72,18 @@ online-vehicle-rental-system/
 ## ⚙️ Installation Guide
 
 🖥️ Backend
+```
 cd backend
 npm install
-
+```
 🌐 Frontend
+```
 cd ../frontend
 npm install
-
+```
 
 ### 🧑‍💻 Author
-Stantilin — MERN Stack Developer
+##### Stantilin — MERN Stack Developer
 <p align="left">
   <a href="https://linkedin.com/in/stan01in" target="_blank">
     <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white" />
