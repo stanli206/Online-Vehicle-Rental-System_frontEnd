@@ -1,12 +1,53 @@
-# React + Vite
+# 🚗 Online Vehicle Rental System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-featured **MERN Stack** application that allows users to browse, book, and review vehicles for rent. It includes role-based dashboards, secure authentication, payment integration, and admin management tools.
 
-Currently, two official plugins are available:
+## 🔧 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Frontend:**
+- React.js (Vite)
+- Tailwind CSS
+- React Router DOM
+- Context API (for Auth & State Management)
+- Axios
 
-## Expanding the ESLint configuration
+**Backend:**
+- Node.js with ES Modules
+- Express.js
+- MongoDB with Mongoose
+- Cloudinary (for image storage)
+- Stripe (for payments)
+- JWT (Authentication)
+- Bcrypt (Password hashing)
+- Multer (for file handling)
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 📚 Features
+
+### 🚙 User Panel
+- Signup/Login with JWT
+- View available vehicles
+- Search & filter vehicles
+- Book vehicles with date/time
+- Stripe payment integration
+- View "My Bookings" with order tracking
+- Submit review & rating (modal-based)
+- Edit profile
+
+### 🛠️ Admin Panel
+- Role-based redirection after login
+- Create, update, and delete vehicle listings
+- Upload/delete vehicle images to Cloudinary
+- View all registered users
+- View all bookings and payment history
+
+---
+
+## ⚙️ Installation Guide
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/online-vehicle-rental-system.git
+cd online-vehicle-rental-system
