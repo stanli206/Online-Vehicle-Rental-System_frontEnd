@@ -5,7 +5,6 @@ A full-featured **MERN Stack** application that allows users to browse, book, an
 ---
 
 ## 🔧 Tech Stack
-
 ### 💻 Frontend
 - ⚛️ React.js (Vite)
 - 🎨 Tailwind CSS
@@ -20,12 +19,10 @@ A full-featured **MERN Stack** application that allows users to browse, book, an
 - ☁️ Cloudinary (Image storage)
 - 💳 Stripe (Payments)
 - 🔐 JWT (Authentication)
-- 🧂 Bcrypt (Password hashing)
-  
+- 🧂 Bcrypt (Password hashing)  
 ---
 
 ## 📚 Features
-
 ### 🚙 User Panel
 - 🔐 Signup/Login with JWT
 - 🔍 View and search available vehicles
@@ -34,17 +31,15 @@ A full-featured **MERN Stack** application that allows users to browse, book, an
 - 📦 View "My Bookings" with order tracking
 - 🌟 Submit review & rating (modal-based)
 - 📝 Edit user profile
-
 ---
-
 ### 🛠️ Admin Panel
 - 🔁 Role-based redirection (Admin vs User)
 - 🆕 Create, ✏️ update, 🗑️ delete vehicle listings
 - ☁️ Upload/delete images via Cloudinary
 - 👥 View all registered users
 - 📊 View bookings & completed payments
-
 ---
+
 ### 📁 Folder Structure
 
 ```bash
@@ -56,7 +51,7 @@ online-vehicle-rental-system/
 │   ├── routes/            # API route handlers
 │   ├── middleware/        # JWT Auth, error handling
 │   ├── config/            # DB and Cloudinary setup
-│   └── server.js          # App entry point
+│   └── index.js          # App entry point
 │
 ├── frontend/
 │   ├── components/        # Reusable UI components
@@ -67,6 +62,21 @@ online-vehicle-rental-system/
 │
 └── README.md
 ```
+
+## 🚀 Preview
+
+| ![Screenshot 1](https://github.com/user-attachments/assets/4da43c74-b4ea-498c-a51f-7728de63a091) | ![Screenshot 2](https://github.com/user-attachments/assets/36fdc174-4465-4f5e-af5d-780bc677cc33) |
+| --- | --- |
+| ![Screenshot 3](https://github.com/user-attachments/assets/14a3c65b-c6fb-4966-8a8c-2dabb50690ac) | ![Screenshot 4](https://github.com/user-attachments/assets/9917bdb2-f1e2-4cca-a94c-be27659d08fd) |
+| ![Screenshot 5](https://github.com/user-attachments/assets/b0c9bcb7-468d-4b1f-96d4-83f4ccd7c73f) |   |
+
+
+✨ **Features**:
+- 🚗 Easy Vehicle Booking
+- 🏍️ Bike & Car Rentals
+- 📅 Date & Time Selection
+- 💳 Secure Payments
+
 
 
 ## ⚙️ Installation Guide
@@ -95,8 +105,7 @@ npm install
     <img src="https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=react&logoColor=white" />
   </a>
 </p>
-
-
+```
 ### 📥 1. Clone the Repository
 
 ```
