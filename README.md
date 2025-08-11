@@ -68,7 +68,7 @@ online-vehicle-rental-system/
 | ![Screenshot 1](https://github.com/user-attachments/assets/4da43c74-b4ea-498c-a51f-7728de63a091) | ![Screenshot 2](https://github.com/user-attachments/assets/36fdc174-4465-4f5e-af5d-780bc677cc33) |
 | --- | --- |
 | ![Screenshot 3](https://github.com/user-attachments/assets/14a3c65b-c6fb-4966-8a8c-2dabb50690ac) | ![Screenshot 4](https://github.com/user-attachments/assets/9917bdb2-f1e2-4cca-a94c-be27659d08fd) |
-| ![Screenshot 5](https://github.com/user-attachments/assets/b0c9bcb7-468d-4b1f-96d4-83f4ccd7c73f) |   |
+| ![Screenshot 5](https://github.com/user-attachments/assets/bfe2b410-e760-485a-b712-bffb32ef1e44) |  ![Screenshot 6](https://github.com/user-attachments/assets/b0c9bcb7-468d-4b1f-96d4-83f4ccd7c73f) 
 
 
 ✨ **Features**:
