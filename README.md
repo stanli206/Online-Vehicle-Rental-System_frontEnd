@@ -5,39 +5,31 @@ A full-featured **MERN Stack** application that allows users to browse, book, an
 ---
 
 ## 🔧 Tech Stack
-### 💻 Frontend
-- ⚛️ React.js (Vite)
-- 🎨 Tailwind CSS
-- 🔁 React Router DOM
-- 🧠 Context API (for Auth & State Management)
-- 📡 Axios
 
-### 🔙 Backend
-- 🟩 Node.js with ES Modules
-- 🚂 Express.js
-- 🍃 MongoDB with Mongoose
-- ☁️ Cloudinary (Image storage)
-- 💳 Stripe (Payments)
-- 🔐 JWT (Authentication)
-- 🧂 Bcrypt (Password hashing)  
+| **Frontend** | **Backend** |
+|--------------|-------------|
+| ⚛️ React.js (Vite) | 🟩 Node.js with ES Modules |
+| 🎨 Tailwind CSS | 🚂 Express.js |
+| 🔁 React Router DOM | 🍃 MongoDB with Mongoose |
+| 🧠 Context API (Auth & State Management) | ☁️ Cloudinary (Image storage) |
+| 📡 Axios | 💳 Stripe (Payments) |
+|  | 🔐 JWT (Authentication) |
+|  | 🧂 Bcrypt (Password hashing) |
+  
 ---
 
 ## 📚 Features
-### 🚙 User Panel
-- 🔐 Signup/Login with JWT
-- 🔍 View and search available vehicles
-- 📅 Book vehicles with date & time
-- 💳 Stripe payment integration
-- 📦 View "My Bookings" with order tracking
-- 🌟 Submit review & rating (modal-based)
-- 📝 Edit user profile
----
-### 🛠️ Admin Panel
-- 🔁 Role-based redirection (Admin vs User)
-- 🆕 Create, ✏️ update, 🗑️ delete vehicle listings
-- ☁️ Upload/delete images via Cloudinary
-- 👥 View all registered users
-- 📊 View bookings & completed payments
+
+| **User Panel** | **Admin Panel** |
+|----------------|-----------------|
+| 🔐 Signup/Login with JWT | 🔁 Role-based redirection (Admin vs User) |
+| 🔍 View & search available vehicles | 🆕 Create, ✏️ Update, 🗑️ Delete vehicles |
+| 📅 Book vehicles with date & time | ☁️ Upload/delete images via Cloudinary |
+| 💳 Stripe payment integration | 👥 View all registered users |
+| 📦 View "My Bookings" with order tracking | 📊 View bookings & completed payments |
+| 🌟 Submit review & rating (modal-based) |  |
+| 📝 Edit user profile |  |
+
 ---
 
 ### 📁 Folder Structure
