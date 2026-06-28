@@ -31,7 +31,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     axios
-      .get("https://rentgaadi-backend.onrender.com/api/vehicle/getAllVehicles", {
+      .get("https://onlinerentauto.netlify.app/vehicle/getAllVehicles", {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
@@ -44,7 +44,7 @@ const AdminDashboard = () => {
       });
 
     axios
-      .get("https://rentgaadi-backend.onrender.com/api/user/getAllProfile", {
+      .get("https://onlinerentauto.netlify.app/user/getAllProfile", {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
@@ -57,7 +57,7 @@ const AdminDashboard = () => {
       });
 
     axios
-      .get("https://rentgaadi-backend.onrender.com/api/user/users&bookings&payments", {
+      .get("https://onlinerentauto.netlify.app/user/users&bookings&payments", {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
@@ -124,7 +124,7 @@ const AdminDashboard = () => {
     }
 
     axios
-      .post("https://rentgaadi-backend.onrender.com/api/vehicle/create", formData, {
+      .post("https://onlinerentauto.netlify.app/vehicle/create", formData, {
         headers: {
           Authorization: `Bearer ${user.token}`,
           "Content-Type": "multipart/form-data",
@@ -190,7 +190,7 @@ const AdminDashboard = () => {
     }
 
     axios
-      .put(`https://rentgaadi-backend.onrender.com/api/vehicle/update/${editId}`, formData, {
+      .put(`https://onlinerentauto.netlify.app/vehicle/update/${editId}`, formData, {
         headers: {
           Authorization: `Bearer ${user.token}`,
           "Content-Type": "multipart/form-data",
@@ -223,7 +223,7 @@ const AdminDashboard = () => {
   const handleDeleteVehicle = (id) => {
     if (confirm("Are you sure you want to delete this vehicle?")) {
       axios
-        .delete(`https://rentgaadi-backend.onrender.com/api/vehicle/delete/${id}`, {
+        .delete(`https://onlinerentauto.netlify.app/vehicle/delete/${id}`, {
           headers: { Authorization: `Bearer ${user.token}` },
         })
         .then(() => {

@@ -47,7 +47,7 @@ const UserDashboard = () => {
   const fetchUserPayments = async (userId) => {
     try {
       const response = await axios.get(
-        `https://rentgaadi-backend.onrender.com/api/user/users&bookings&payments/${userId}`,
+        `/api/user/users&bookings&payments/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -66,7 +66,7 @@ const UserDashboard = () => {
   const fetchVehicles = async () => {
     try {
       const response = await axios.get(
-        "https://rentgaadi-backend.onrender.com/api/vehicle/getAllVehicles"
+        "/api/vehicle/getAllVehicles"
       );
       setVehicles(response.data.data);
     } catch (err) {
@@ -81,7 +81,7 @@ const UserDashboard = () => {
   const fetchProfile = async (userId) => {
     try {
       const res = await axios.get(
-        `https://rentgaadi-backend.onrender.com/api/user/userProfile/${userId}`,
+        `/api/user/userProfile/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -104,7 +104,7 @@ const UserDashboard = () => {
   const fetchUserReviews = async (userId) => {
     try {
       const response = await axios.get(
-        `https://rentgaadi-backend.onrender.com/api/review/getReviewById/${userId}`,
+        `/api/review/getReviewById/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -121,7 +121,7 @@ const UserDashboard = () => {
   const fetchInvoiceDetails = async (paymentId) => {
     try {
       const response = await axios.get(
-        `https://rentgaadi-backend.onrender.com/api/user/users&bookings&payments/${user._id}`,
+        `/api/user/users&bookings&payments/${user._id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -146,7 +146,7 @@ const UserDashboard = () => {
     setProfileLoading(true);
     try {
       await axios.put(
-        `https://rentgaadi-backend.onrender.com/api/user/updateProfile/${user._id}`,
+        `/api/user/updateProfile/${user._id}`,
         updatedProfile,
         {
           headers: {

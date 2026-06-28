@@ -28,7 +28,7 @@ const Register = () => {
     );
 
     try {
-      await axios.post("https://rentgaadi-backend.onrender.com/api/auth/register", formDataObj, {
+      await axios.post("/api/auth/register", formDataObj, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       navigate("/login"); // Redirect after successful registration

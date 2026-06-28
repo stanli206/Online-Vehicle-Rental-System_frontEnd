@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
 export const AuthContext = createContext();
 
@@ -23,7 +24,13 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(userData)); // Save user to local storage
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      // Clear the httpOnly auth cookies on the server.
+      await axios.post("/api/auth/logout");
+    } catch {
+      // Ignore network errors on logout; clear local state regardless.
+    }
     setUser(null);
     localStorage.removeItem("user");
   };

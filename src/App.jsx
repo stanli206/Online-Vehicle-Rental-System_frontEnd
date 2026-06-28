@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import "./App.css";
 import { AuthContext } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
+import ChatBot from "./components/ChatBot";
 import {
   BrowserRouter as Router,
   Routes,
@@ -17,6 +18,7 @@ import Payment from "./pages/Payment";
 import PaymentSuccess from "./pages/payment-success";
 import PaymentFailed from "./pages/PaymentFailed";
 import MyBooking from "./pages/MyBooking";
+import PendingPayments from "./pages/PendingPayments";
 import UserProfile from "./pages/UserProfile";
 import UserDashboard from "./pages/UserDashboard";
 
@@ -40,6 +42,7 @@ function App() {
         <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route path="/payment-failed" element={<PaymentFailed />} />
         <Route path="/orders&bookings" element={<MyBooking />} />
+        <Route path="/pending-payments" element={<PendingPayments />} />
         <Route path="/userProfile" element={<UserProfile />} />
 
         <Route
@@ -53,6 +56,7 @@ function App() {
           }
         />
       </Routes>
+      <ChatBot />
     </>
   );
 }

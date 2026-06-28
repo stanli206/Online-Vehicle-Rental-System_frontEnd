@@ -209,9 +209,13 @@ function Navbar() {
         {/* Right side */}
         <div className="relative" ref={dropdownRef}>
           {user ? (
-            <div className="relative inline-block text-left">
+            <div
+              className="relative inline-block text-left"
+              onMouseEnter={() => setDropdownOpen(true)}
+              onMouseLeave={() => setDropdownOpen(false)}
+            >
               <button
-                onClick={() => setDropdownOpen(!dropdownOpen)}
+                onClick={() => setDropdownOpen((o) => !o)}
                 className="flex items-center gap-2 font-medium hover:text-blue-200 focus:outline-none transition-colors duration-200"
               >
                 <span className="hidden sm:inline">Hello, {user.name}</span>
@@ -224,7 +228,7 @@ function Navbar() {
 
               {/* Dropdown */}
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-xl text-gray-800 z-50 overflow-hidden border border-gray-100">
+                <div className="absolute right-0 top-full w-52 bg-white rounded-md shadow-xl text-gray-800 z-50 overflow-hidden border border-gray-100">
                   {isUser && (
                     <Link
                       to="/orders&bookings"
@@ -232,6 +236,15 @@ function Navbar() {
                       className="block px-4 py-2 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
                     >
                       My Bookings
+                    </Link>
+                  )}
+                  {isUser && (
+                    <Link
+                      to="/pending-payments"
+                      onClick={() => setDropdownOpen(false)}
+                      className="block px-4 py-2 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
+                    >
+                      Pending Payments
                     </Link>
                   )}
                   {isUser && (

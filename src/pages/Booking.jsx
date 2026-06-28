@@ -25,7 +25,7 @@ const Booking = () => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
-          `https://rentgaadi-backend.onrender.com/api/review/getAllReviewById/${vehicle._id}`
+          `/api/review/getAllReviewById/${vehicle._id}`
         );
         window.scrollTo(0, 0);
         setReviews(response.data);
@@ -49,7 +49,7 @@ const Booking = () => {
 
     try {
       const response = await axios.post(
-        `https://rentgaadi-backend.onrender.com/api/review/createReview/${vehicle._id}`,
+        `/api/review/createReview/${vehicle._id}`,
         newReview,
         {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -87,7 +87,7 @@ const Booking = () => {
     const fetchBookedDates = async () => {
       try {
         const response = await axios.get(
-          `https://rentgaadi-backend.onrender.com/api/booking/booked-dates/${vehicle._id}`
+          `/api/booking/booked-dates/${vehicle._id}`
         );
         setBookedDates(response.data.bookedDates.map((date) => new Date(date)));
       } catch (error) {
@@ -124,7 +124,7 @@ const Booking = () => {
 
     try {
       const response = await axios.post(
-        "https://rentgaadi-backend.onrender.com/api/booking/createBooking",
+        "/api/booking/createBooking",
         bookingData,
         {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -376,10 +376,10 @@ const Booking = () => {
                   Proceed to Pay
                 </button>
                 <button
-                  onClick={() => navigate("/")}
+                  onClick={() => setBookingDetails(null)}
                   className="border border-black px-4 py-2 rounded hover:bg-gray-200 transition duration-200 font-medium flex-1"
                 >
-                  Back to Home
+                  Cancel
                 </button>
               </div>
             </div>

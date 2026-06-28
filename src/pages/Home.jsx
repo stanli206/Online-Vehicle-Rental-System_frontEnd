@@ -16,11 +16,11 @@
 //     const fetchVehicles = async () => {
 //       try {
 //         const response = await axios.get(
-//           "https://rentgaadi-backend.onrender.com/api/vehicle/getAllVehicles"
+//           "/api/vehicle/getAllVehicles"
 //         );
 //         setVehicles(response.data.data);
 
-//         //Fetch ratings for each vehicle //https://rentgaadi-backend.onrender.com
+//         //Fetch ratings for each vehicle //
 //         response.data.data.forEach((vehicle) => {
 //           fetchRating(vehicle._id);
 //         });
@@ -39,7 +39,7 @@
 //   const fetchRating = async (vehicleId) => {
 //     try {
 //       const response = await axios.get(
-//         `https://rentgaadi-backend.onrender.com/api/review/${vehicleId}/average-rating`
+//         `/api/review/${vehicleId}/average-rating`
 //       );
 //       setRatings((prevRatings) => ({
 //         ...prevRatings,
@@ -424,7 +424,7 @@ const Home = () => {
     const fetchVehicles = async () => {
       try {
         const response = await axios.get(
-          "https://rentgaadi-backend.onrender.com/api/vehicle/getAllVehicles"
+          "/api/vehicle/getAllVehicles"
         );
         setVehicles(response.data.data);
 
@@ -445,7 +445,7 @@ const Home = () => {
   const fetchRating = async (vehicleId) => {
     try {
       const response = await axios.get(
-        `https://rentgaadi-backend.onrender.com/api/review/${vehicleId}/average-rating`
+        `/api/review/${vehicleId}/average-rating`
       );
       setRatings((prevRatings) => ({
         ...prevRatings,

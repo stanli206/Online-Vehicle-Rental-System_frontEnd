@@ -26,10 +26,11 @@ const Payment = () => {
 
     try {
       const response = await axios.post(
-        "https://rentgaadi-backend.onrender.com/api/payment/createPayment", // Updated endpoint
+        "/api/payment/createPayment", // Updated endpoint
         {
           bookingId: booking.id,
           paymentMethod: "card",
+          origin: window.location.origin, // return to the same origin after Stripe
         },
         {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -104,6 +105,14 @@ const Payment = () => {
           }`}
         >
           {isProcessing ? "Processing..." : "Pay with card"}
+        </button>
+
+        <button
+          onClick={() => navigate("/")}
+          disabled={isProcessing}
+          className="w-full mt-3 py-3 text-red-600 border border-red-400 rounded-md transition duration-200 font-medium hover:bg-red-50 disabled:opacity-50"
+        >
+          Cancel Payment
         </button>
 
         {error && (
