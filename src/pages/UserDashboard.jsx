@@ -54,8 +54,6 @@ const UserDashboard = () => {
           },
         }
       );
-      console.log("✅ Full API Response: ", response); // 👈 Entire Axios response
-      console.log("✅ Response Data Only: ", response.data);
       setPayments(response.data.data);
     } catch (error) {
       console.error("Error fetching user payments", error);
