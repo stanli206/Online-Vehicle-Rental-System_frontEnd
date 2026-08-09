@@ -9,7 +9,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 // Central API base URL — set once here, all axios calls use relative paths.
 // Configure per environment via VITE_API_URL (.env); falls back to local dev.
 axios.defaults.baseURL =
-  import.meta.env.VITE_API_URL || "http://localhost:5000";
+  import.meta.env.VITE_API_URL;// || "http://localhost:5000";
 
 // Send the httpOnly auth cookies with every request.
 axios.defaults.withCredentials = true;
