@@ -18,9 +18,13 @@ const Home = () => {
         const response = await axios.get(
           "/api/vehicle/getAllVehicles"
         );
-        setVehicles(response.data.data);
+        // Guard: only use the payload if it's actually an array.
+        const vehicleList = Array.isArray(response.data?.data)
+          ? response.data.data
+          : [];
+        setVehicles(vehicleList);
 
-        response.data.data.forEach((vehicle) => {
+        vehicleList.forEach((vehicle) => {
           fetchRating(vehicle._id);
         });
       } catch (err) {
@@ -52,7 +56,7 @@ const Home = () => {
     navigate("/booking", { state: { vehicle } });
   };
 
-  const filteredVehicles = vehicles.filter((vehicle) =>
+  const filteredVehicles = (vehicles || []).filter((vehicle) =>
     `${vehicle.make} ${vehicle.model} ${vehicle.location}${vehicle.pricePerDay}`
       .toLowerCase()
       .includes(searchQuery.toLowerCase())
