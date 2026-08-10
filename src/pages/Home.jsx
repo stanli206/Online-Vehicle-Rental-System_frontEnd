@@ -73,7 +73,7 @@ const Home = () => {
         className="bg-cover bg-center h-[500px] flex items-center justify-center text-white text-center relative"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/car-rental-bg.jpg')",
+            "linear-gradient(135deg, rgba(13, 148, 136, 0.95), rgba(30, 64, 175, 0.95))",
         }}
       >
         <div className="max-w-2xl px-6">
