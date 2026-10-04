@@ -10,6 +10,8 @@ on:
     branches:
       - main
 
+  workflow_dispatch: # allows manual "Run workflow" trigger from the Actions tab
+
 jobs:
 
   build_and_deploy_job:
